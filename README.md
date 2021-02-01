@@ -1,16 +1,12 @@
-# flutter_planplus by Kogler
+# Planplus
 
-A new Flutter application.
+一个计划规划类软件
 
-## Getting Started
+## 设计定位
 
-This project is a starting point for a Flutter application.
+## 联系方式
 
-A few resources to get you started if this is your first Flutter project:
+[Github-Planplus](https://github.com/Kogler7/Planplus)
+-[nihao]
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+        haha
