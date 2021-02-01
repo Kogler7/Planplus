@@ -7,6 +7,5 @@
 ## 联系方式
 
 [Github-Planplus](https://github.com/Kogler7/Planplus)
--[nihao]
-
+- [nihao](https://github.com/Kogler7/Planplus)
         haha
