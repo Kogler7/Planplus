@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './Tests/list.dart';
+import './config/index.dart';
 
 void main() =>runApp(Planplus());
 
@@ -9,7 +10,7 @@ class Planplus extends StatelessWidget {
     return MaterialApp(
       title: 'Planplus',//app标识
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: KColor.primarySwatchColor,
       ),
       home: MyHomePage(barTitle: 'Planplus'),//首页
     );
@@ -61,17 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.all(0),
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                  accountName: Text('Kogler'),
-                  accountEmail: Text('Kogler@outlook.com'),
-                  currentAccountPicture: CircleAvatar(backgroundImage:
-                  NetworkImage(
-                      'https://image.baidu.com/search/down?tn=download&ipn=dwnl&word=download&ie=utf8&fr=aladdin&url=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202004%2F15%2F20200415114219_csnyf.thumb.400_0.webp'
-                  ),),
+                  accountName: Text(KString.APP_AUTHOR),
+                  accountEmail: Text(KString.APP_AUTHOR_EMAIL),
+                  currentAccountPicture: CircleAvatar(
+                      backgroundImage: KImage.avatar
+                  ),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                            'https://pic2.zhimg.com/v2-91f68c47646f2e13276be5571c0ca579_r.jpg'
-                        ),
+                        image: KImage.bkground,
                         fit: BoxFit.cover,
                       )
                   ),
@@ -98,12 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           bottomNavigationBar: Container(
             height: 50,
-            decoration: BoxDecoration(color: Colors.red),
+            decoration: BoxDecoration(color: KColor.bottomNavigationBar),
               child: TabBar(
                 tabs: <Widget>[
-                  Tab(icon: Icon(Icons.menu),),
-                  Tab(icon: Icon(Icons.dashboard),),
-                  Tab(icon: Icon(Icons.data_usage),),
+                  Tab(icon: Icon(KIcon.ListsPage),),
+                  Tab(icon: Icon(KIcon.PETrackPage),),
+                  Tab(icon: Icon(KIcon.JudgePage),),
                 ],
               )
           ),
