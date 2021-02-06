@@ -14,4 +14,7 @@ class KColor{
   static const Color toastTextColor = Colors.white;//toast提示文本颜色
   static const Color indexTabSelectedColor = Colors.red;//选项卡按钮选中颜色
   static const Color indexTabUnselectedColor = Colors.grey;//选项卡按钮选未中颜色
+//text
+  static const Color gotoIconedTextColor = Colors.black54;//图标文本颜色
+  static const Color gotoIconColor = Colors.grey;//图标箭头颜色
 }
