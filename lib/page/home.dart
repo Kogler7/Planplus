@@ -1,17 +1,16 @@
 //Planplus主页
-
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
-import './list_page.dart';
-import './track_page.dart';
-import './judge_page.dart';
-import 'package:flutter_planplus/page/user_drawer.dart';
+import 'tabs/list_page.dart';
+import 'tabs/track_page.dart';
+import 'tabs/judge_page.dart';
+import 'package:flutter_planplus/page/user.dart';
 import 'package:flutter_planplus/model/built_in/dev_info.dart';
 
 class HomePage extends StatefulWidget{
-  final String barTitle;
+  final String barTitle = 'Planplus';
 
-  HomePage({Key key,this.barTitle}) : super(key:key);
+  HomePage({Key key}) : super(key:key);
 
   @override
   _HomePageState createState()=>_HomePageState();
@@ -55,6 +54,7 @@ class _HomePageState extends State<HomePage>{
             onPressed: (){},
             child: Icon(Icons.add),
           ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         ),
     );
   }

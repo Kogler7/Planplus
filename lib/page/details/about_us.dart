@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/utils/expect.dart';
+import 'file:///C:/Users/Kolger/OneDrive/MyGit/Planplus/lib/widgets/expect.dart';
 
 class AboutUs extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Expect();
+    return Scaffold(
+      body: Expect(),
+    );
   }
 }

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_planplus/config/index.dart';
 
-class GotoIconedText extends StatelessWidget{
+class GotoItem extends StatelessWidget{
   final IconData iconData;
   final String title;
   final VoidCallback callback;
   final Color color;
 
-  GotoIconedText({
+  GotoItem({
     this.title,
     this.iconData,
     this.callback,
@@ -26,19 +26,19 @@ class GotoIconedText extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 10.0),
+              margin: EdgeInsets.only(left: 35.0.w),
               child: Icon(
                 iconData,
-                size: 40.0.w,
+                size: 50.0.w,
                 color: color,
               ),
             ),
-            Padding(padding: EdgeInsets.only(left:20.0.w)),
+            Padding(padding: EdgeInsets.only(left:35.0.w)),
             Text(
               title,
               style: TextStyle(
-                fontSize: ScreenUtil().setSp(26.0),
-                color: KColor.gotoIconedTextColor
+                fontSize: ScreenUtil().setSp(28.0),
+                color: KColor.gotoItemTextColor
               ),
             ),
             Expanded(
@@ -47,7 +47,7 @@ class GotoIconedText extends StatelessWidget{
                 margin: EdgeInsets.only(right: 30.0.w),
                 child: Icon(
                   KIcon.GotoArrow,
-                  color: KColor.gotoIconColor,
+                  color: KColor.gotoItemIconColor,
                   size: 30.0.w,
                 ),
               ),
