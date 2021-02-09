@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //主要颜色常量
 class KColor{
   static const Color primarySwatchColor = Colors.blue;//默认主要颜色
-  static const Color bottomNavigationBar = Colors.lightBlueAccent;//默认导航栏颜色
+  static const Color navigationBar = Colors.lightBlueAccent;//默认导航栏颜色
   static const Color defaultTextColor = Colors.redAccent;//默认文本颜色
   static const Color defaultButtonColor = Colors.redAccent;//默认按钮颜色
   static const Color defaultSwitchColor = Colors.redAccent;//默认切换按钮颜色
@@ -17,4 +17,8 @@ class KColor{
 //text
   static const Color gotoItemTextColor = Colors.black54;//图标文本颜色
   static const Color gotoItemIconColor = Colors.grey;//图标箭头颜色
+//FloatingActionButtons
+  static const Color fabList = Colors.lightGreenAccent;//ListPageButton颜色
+  static const Color fabTrack = Colors.white;//TrackPageButton颜色
+  static const Color fabJudge = Colors.yellowAccent;//JudgePageButton颜色
 }
