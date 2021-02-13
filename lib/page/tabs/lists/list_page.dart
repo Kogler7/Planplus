@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
+import 'package:flutter_planplus/widgets/index.dart';
 
 class ListPage extends StatefulWidget{
   ListPage({Key key}):super(key: key);
@@ -12,8 +13,14 @@ class _ListPageState extends State<ListPage>{
 
   @override
   Widget build(BuildContext context){
-    return Center(
-      child: Text('ListPage'),
+    return ListView(
+      children: <Widget>[
+        Item(),
+        Item(),
+        Item(),
+        Item(),
+        Item(),
+      ],
     );
   }
 }

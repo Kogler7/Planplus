@@ -13,7 +13,7 @@ class MicroTabBar extends StatelessWidget{
   @override
   MicroTabBar({Key key,
     this.tabs,this.width,this.height,
-    this.bkColor = KColor.navigationBar,
+    this.bkColor = KColor.primaryColor,
     this.circular = 12.0,
     this.elevation = 3.0
   }):super(key: key) {

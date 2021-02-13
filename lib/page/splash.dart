@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/image.dart';
+import 'package:flutter_planplus/config/index.dart';
 import '../router/index.dart';
 
 class SplashPage extends StatefulWidget{
@@ -11,7 +12,7 @@ class _SplashPageState extends State<SplashPage>{
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), (){
+    Future.delayed(Duration(seconds: 1), (){
       Applicat.goTo(context, Routes.home);
     });
   }
@@ -41,7 +42,7 @@ class _SplashPageState extends State<SplashPage>{
               Align(
                 alignment: Alignment(-0.7,0.97),
                 child: Text(
-                  'Copyright © 2021 The Planplus Authors. All rights reserved. ',
+                  KString.Copyright_Statement,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,

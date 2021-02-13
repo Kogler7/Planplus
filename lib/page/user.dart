@@ -6,10 +6,10 @@ import 'package:flutter_planplus/widgets/index.dart';
 import 'package:flutter_planplus/utils/index.dart';
 import 'package:flutter_planplus/router/index.dart';
 
-class UserDrawer extends StatelessWidget{
+class UserDrawer extends StatelessWidget {
   final UserInfo user;
 
-  UserDrawer({Key key,this.user}):super(key: key);
+  UserDrawer({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,7 @@ class UserDrawer extends StatelessWidget{
             currentAccountPicture: CircleAvatar(
               backgroundImage: user.avatar,
             ),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: user.bkground,
-                fit: BoxFit.cover
-              )
-            ),
+            decoration: BoxDecoration(image: DecorationImage(image: user.bkground, fit: BoxFit.cover)),
           ),
           Card(
             child: Column(
@@ -35,25 +30,25 @@ class UserDrawer extends StatelessWidget{
                 GotoItem(
                   title: '用户反馈',
                   iconData: Icons.feedback,
-                  callback: (){
+                  callback: () {
                     ToastUtil.showBtmToast('用户反馈');
-                    Applicat.pageTo(context,Routes.expect);
+                    Applicat.pageTo(context, Routes.expect);
                   },
                 ),
                 GotoItem(
                   title: '用户必读',
                   iconData: KIcon.ReadMe,
-                  callback: (){
+                  callback: () {
                     ToastUtil.showBtmToast('用户必读');
-                    Applicat.pageTo(context,Routes.readMe);
+                    Applicat.pageTo(context, Routes.readMe);
                   },
                 ),
                 GotoItem(
                   title: '关于我们',
                   iconData: KIcon.AboutUs,
-                  callback: (){
+                  callback: () {
                     ToastUtil.showBtmToast('关于我们');
-                    Applicat.pageTo(context,Routes.aboutUs);
+                    Applicat.pageTo(context, Routes.aboutUs);
                   },
                 ),
               ],
@@ -67,7 +62,9 @@ class UserDrawer extends StatelessWidget{
                 GotoItem(
                   title: '注销',
                   iconData: KIcon.CheckOut,
-                  callback: (){ToastUtil.showMidToast('已注销');},
+                  callback: () {
+                    ToastUtil.showMidToast('已注销');
+                  },
                 ),
               ],
             ),

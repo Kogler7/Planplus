@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'tabs/list_page.dart';
+import 'tabs/lists/list_page.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
 import './user.dart';
 import 'package:flutter_planplus/model/built_in/dev_info.dart';
 import 'package:flutter_planplus/widgets/micro_tabbar.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   final String barTitle = 'Planplus';
   final Widget listPages = TabBarView(
     children: <Widget>[
@@ -31,7 +31,8 @@ class HomePage extends StatefulWidget{
     KColor.fabJudge,
   ];
   List<Widget> titles = [];
-  HomePage({Key key}) : super(key:key){
+
+  HomePage({Key key}) : super(key: key) {
     pageViews = <Widget>[
       TrackPage(),
       listPages,
@@ -39,28 +40,31 @@ class HomePage extends StatefulWidget{
     ];
     titles = <Widget>[
       Text('02.09 Tue'),
-      MicroTabBar(
-          height: 66.0.h,
-          width: 440.0.w,
-          tabs: <Widget>[
-            Tab(text: '模版',),
-            Tab(text: '任务',),
-            Tab(text: '问卷',),
-          ]
-      ),
+      MicroTabBar(height: 66.0.h, width: 440.0.w, tabs: <Widget>[
+        Tab(
+          text: '模版',
+        ),
+        Tab(
+          text: '任务',
+        ),
+        Tab(
+          text: '问卷',
+        ),
+      ]),
       Text('Kogler'),
     ];
   }
 
   @override
-  _HomePageState createState()=>_HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   //根据选择改变剩余按钮
-  List<Widget> _selectButtons(int index){
-    List<int> _index = [0,1,2];
+  List<Widget> _selectButtons(int index) {
+    List<int> _index = [0, 1, 2];
     _index.remove(_selectedIndex);
     return <Widget>[
       IconButton(
@@ -93,38 +97,34 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: KColor.navigationBar,
-            title: widget.titles[_selectedIndex],
-            centerTitle: true,
-            actions: <Widget>[
-              IconButton(icon: Icon(Icons.search), onPressed: (){})
-            ],
-          ),
-          body: widget.pageViews[_selectedIndex],
-          drawer: UserDrawer(user: DevInfo.Kogler),
-          bottomNavigationBar: BottomAppBar(
-            color: KColor.navigationBar,
-            shape: CircularNotchedRectangle(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.max,
-              children: _selectButtons(_selectedIndex),
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(
-              widget.icons[_selectedIndex],
-              color: widget.buttonColors[_selectedIndex],
-            ),
-            onPressed: (){
-
-            },
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: KColor.primaryColor,
+          title: widget.titles[_selectedIndex],
+          centerTitle: true,
+          actions: <Widget>[IconButton(icon: Icon(Icons.search), onPressed: () {})],
         ),
+        body: widget.pageViews[_selectedIndex],
+        drawer: UserDrawer(user: DevInfo.Kogler),
+        bottomNavigationBar: BottomAppBar(
+          color: KColor.primaryColor,
+          shape: CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: _selectButtons(_selectedIndex),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            widget.icons[_selectedIndex],
+            color: widget.buttonColors[_selectedIndex],
+          ),
+          onPressed: () {},
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
 }
