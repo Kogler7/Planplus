@@ -9,6 +9,7 @@ import 'tabs/judge_page.dart';
 import './user.dart';
 import 'package:flutter_planplus/model/built_in/dev_info.dart';
 import 'package:flutter_planplus/widgets/micro_tabbar.dart';
+import 'package:flutter_planplus/router/index.dart';
 
 class HomePage extends StatefulWidget {
   final String barTitle = 'Planplus';
@@ -121,7 +122,9 @@ class _HomePageState extends State<HomePage> {
             widget.icons[_selectedIndex],
             color: widget.buttonColors[_selectedIndex],
           ),
-          onPressed: () {},
+          onPressed: () {
+            Applicat.pageTo(context, Routes.groupPage);
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),

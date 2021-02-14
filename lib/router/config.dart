@@ -27,6 +27,9 @@ class FluroConfigor{
     "${Routes.readMe}": Handler(
       handlerFunc: (ctx, params) => ReadMe(),
     ),
+    "${Routes.groupPage}": Handler(
+      handlerFunc: (ctx, params) => GroupDetailPage(),
+    ),
   };
   //静态方法
   static void configureRoutes(FluroRouter router){//路由配置

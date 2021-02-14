@@ -15,11 +15,11 @@ class _ListPageState extends State<ListPage>{
   Widget build(BuildContext context){
     return ListView(
       children: <Widget>[
-        Item(),
-        Item(),
-        Item(),
-        Item(),
-        Item(),
+        ItemWidget(),
+        ItemWidget(),
+        ItemWidget(),
+        ItemWidget(),
+        ItemWidget(),
       ],
     );
   }

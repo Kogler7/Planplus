@@ -4,21 +4,84 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math';
 import 'package:flutter_planplus/utils/index.dart';
 
-class Item extends StatefulWidget {
-  Item({Key key}) : super(key: key);
+class ItemWidget extends StatefulWidget {
+  ItemWidget({
+    Key key,
+    @required this.title,
+    this.subTitle = '',
+    this.suHeight = 145,
+    this.suWidth = 750,
+    this.leadingIndex = 0,
+    this.taleIndex = 0,
+    this.leftIndex = 0,
+    this.rightIndex = 0,
+    this.colorLeft = Colors.yellow,
+    this.colorRight = Colors.red,
+    this.onPressed,
+    this.onLongPressed,
+    this.onLongPressEnd,
+    this.onLeftPressed,
+    this.onRightPressed,
+    this.onLTRDrived,
+    this.onRTLDrived,
+    this.locked = false,
+    this.sizeFactor = 1.0,
+  }) : super(key: key);
+
+  final bool locked;
+  final double sizeFactor;
+
+  final String title;
+  final String subTitle;
+
+  final double suHeight;
+  final double suWidth;
+
+  final int leadingIndex;
+  final int taleIndex;
+  final int leftIndex;
+  final int rightIndex;
+
+  final Color colorLeft;
+  final Color colorRight;
+
+  Function() onPressed = () {};
+  Function() onLongPressed = () {};
+  Function(LongPressEndDetails) onLongPressEnd = (LongPressEndDetails) {};
+  Function() onLTRDrived = () {};
+  Function() onRTLDrived = () {};
+  Function() onLeftPressed = () {};
+  Function() onRightPressed = () {};
 
   @override
-  _ItemState createState() => _ItemState();
+  _ItemWidgetState createState() => _ItemWidgetState();
 }
 
-class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
-  double _height = 135.0.w;
+class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateMixin {
+  List<IconData> iconLeading = [
+    Icons.radio_button_unchecked,
+    Icons.radio_button_checked,
+    Icons.check_circle,
+  ];
+  List<IconData> iconTale = [
+    Icons.send,
+    Icons.close,
+  ];
+  List<IconData> iconLeft = [
+    Icons.star,
+  ];
+  List<IconData> iconRight = [
+    Icons.delete,
+  ];
+  double _height;
+  double _width;
   double _xVal = 0;
   double _nowX = 0;
   double _dx = 0;
   double _radius = 0;
   bool _rightWard = false;
-  bool _choosed = false;
+  bool _chosed = false;
+  bool _backWard = false;
 
   AnimationController _controller;
   Animation<double> _animation;
@@ -33,12 +96,25 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
     _animation = Tween(begin: 1.0, end: 0.0).animate(_animation)
       ..addListener(() {
         setState(() {
-          if (_choosed)
+          if (_chosed)
             _xVal = ((1.0 - _animation.value) * (720.w - _nowX.abs()) + _nowX.abs()) * (_rightWard ? 1 : -1);
           else
             _xVal = _animation.value * _nowX;
         });
       });
+    _animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed && _chosed) {
+        _nowX = _xVal;
+        _chosed = false;
+        _backWard = true;
+        _controller.reset();
+        _controller.forward();
+        if (_rightWard)
+          widget.onLTRDrived;
+        else
+          widget.onRTLDrived;
+      } else if (status == AnimationStatus.completed && _backWard) _backWard = false;
+    });
     super.initState();
   }
 
@@ -50,15 +126,22 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _radius = _xVal.abs() > 280.0.w ? (_xVal.abs() - 280.0.w) * 3.5 : 0;
+    _height = ScreenUtil().setWidth(widget.suHeight) * widget.sizeFactor;
+    _width = ScreenUtil().setWidth(widget.suWidth) * widget.sizeFactor;
+    _radius = _backWard
+        ? 400.0
+        : _xVal.abs() > 280.0.w
+            ? (_xVal.abs() - 280.0.w) * 2.6
+            : 0;
     return SizedBox(
       height: _height,
+      width: _width,
       child: Stack(
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 5.5.w),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(10),
               child: Stack(
                 children: <Widget>[
                   Container(decoration: BoxDecoration(color: Colors.black12)),
@@ -67,7 +150,7 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
                       height: _radius * 2,
                       width: _radius * 2,
                       decoration: BoxDecoration(
-                        color: _rightWard ? Colors.blueAccent : Colors.red,
+                        color: _rightWard ? widget.colorLeft : widget.colorRight,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -76,18 +159,13 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
                     top: _height / 2 - _radius - 3,
                   ),
                   Positioned(
-                    child: IconButton(
-                      icon: Icon(_rightWard ? Icons.star : Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          _xVal = 0;
-                        });
-                      },
+                    child: Icon(
+                      _rightWard ? iconLeft[widget.leftIndex] : iconRight[widget.rightIndex],
                       color: Colors.white,
                     ),
-                    left: _rightWard ? _xVal - 60.0 : null,
-                    right: _rightWard ? null : _xVal.abs() - 60.0,
-                    top: _height / 2 - 27.0,
+                    left: _rightWard ? _xVal - 48.0 : null,
+                    right: _rightWard ? null : _xVal.abs() - 48.0,
+                    top: _height / 2 - 15.0,
                   ),
                 ],
               ),
@@ -95,69 +173,107 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
           ),
           Positioned(
             child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
               child: Container(
                 width: 710.w,
-                height: _height - 11.w,
+                height: _height > 11.w ? _height - 11.w : 0,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      spreadRadius: 1.0,
+                      blurRadius: 5.0,
+                      offset: Offset(5, 5),
+                    )
+                  ],
                 ),
                 margin: EdgeInsets.symmetric(vertical: 5.5.w),
-                child: Row(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.radio_button_unchecked, color: Colors.black54),
-                      onPressed: () {},
-                      iconSize: 60.w,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '写作业',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            '日期：2021年2月13日；已标记',
-                            style: TextStyle(fontSize: 12, color: Colors.black54),
-                          ),
-                        ],
+                child: Stack(
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: Ink(
+                        child: InkWell(
+                          onTap: widget.onPressed,
+                        ),
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.send, color: Colors.black54),
-                      onPressed: () {},
-                      iconSize: 36.w,
+                    Row(
+                      children: <Widget>[
+                        Material(
+                          child: IconButton(
+                            icon: Icon(iconLeading[widget.leadingIndex], color: Colors.black54),
+                            onPressed: widget.onLeftPressed,
+                            iconSize: 60.w,
+                          ),
+                          color: Colors.transparent,
+                          type: MaterialType.circle,
+                          clipBehavior: Clip.antiAlias,
+                        ),
+                        Expanded(
+                          child: IgnorePointer(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.title,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                widget.subTitle != ''
+                                    ? Text(
+                                        widget.subTitle,
+                                        style: TextStyle(fontSize: 10, color: Colors.black54),
+                                      )
+                                    : SizedBox(width: 0, height: 0)
+                              ],
+                            ),
+                          ),
+                        ),
+                        Material(
+                          child: IconButton(
+                            icon: Icon(iconTale[widget.taleIndex], color: Colors.black54),
+                            onPressed: widget.onRightPressed,
+                            iconSize: 36.w,
+                          ),
+                          color: Colors.transparent,
+                          type: MaterialType.circle,
+                          clipBehavior: Clip.antiAlias,
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              onTap: (){
-                ToastUtil.showBtmToast('已选择');
-              },
               onPanDown: (DragDownDetails e) {
                 _controller.reset();
                 _xVal = 0;
               },
               onPanUpdate: (DragUpdateDetails e) {
-                _dx += e.delta.dx;
-                _rightWard = _dx > 0 ? true : false;
-                setState(() {
-                  _xVal += e.delta.dx;
-                });
+                if (!widget.locked) {
+                  _dx += e.delta.dx;
+                  _rightWard = _dx > 0 ? true : false;
+                  setState(() {
+                    _xVal += e.delta.dx;
+                  });
+                }
               },
               onPanEnd: (DragEndDetails e) {
-                _rightWard = _dx > 0 ? true : false;
-                _dx = 0;
-                _nowX = _xVal;
-                if (_radius > _height / 2)
-                  _choosed = true;
-                else
-                  _choosed = false;
-                _controller.forward();
+                if (!widget.locked) {
+                  _rightWard = _dx > 0 ? true : false;
+                  _dx = 0;
+                  _nowX = _xVal;
+                  if (_radius > _height / 2)
+                    _chosed = true;
+                  else
+                    _chosed = false;
+                  _controller.forward();
+                }
               },
+              onLongPress: widget.onLongPressed,
+              onLongPressEnd: widget.onLongPressEnd,
             ),
             left: _xVal + 20.0.w,
           ),
@@ -165,4 +281,10 @@ class _ItemState extends State<Item> with SingleTickerProviderStateMixin {
       ),
     );
   }
+}
+
+class ItemLongPressedNote extends Notification {
+  final int index;
+
+  ItemLongPressedNote(this.index);
 }
