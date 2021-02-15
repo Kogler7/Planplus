@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class KIcon{
   //flutter icons
   static const IconData PETrackPage = Icons.dashboard;
-  static const IconData ListsPage = Icons.view_list_sharp;
+  static const IconData ListsPage = Icons.storage;
   static const IconData JudgePage = Icons.data_usage;
   static const IconData AboutUs = Icons.supervised_user_circle;
   static const IconData ReadMe = Icons.mail;

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_planplus/config/index.dart';
 
-class GotoItem extends StatelessWidget{
+class FixedItem extends StatelessWidget{
   final IconData iconData;
   final String title;
   final VoidCallback callback;
   final Color color;
 
-  GotoItem({
+  FixedItem({
     this.title,
     this.iconData,
     this.callback,

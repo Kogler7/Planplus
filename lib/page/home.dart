@@ -2,8 +2,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
+import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
+import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
+import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'tabs/lists/list_page.dart';
+import 'tabs/lists/list.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
 import './user.dart';
@@ -15,9 +18,9 @@ class HomePage extends StatefulWidget {
   final String barTitle = 'Planplus';
   final Widget listPages = TabBarView(
     children: <Widget>[
-      ListPage(),
-      ListPage(),
-      ListPage(),
+      ModelListPage(),
+      TaskListPage(),
+      QueryListPage(),
     ],
   );
   List<Widget> pageViews = [];

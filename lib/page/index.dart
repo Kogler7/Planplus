@@ -5,8 +5,8 @@ export './user/read_me.dart';
 export './tabs/judge_page.dart';
 export './tabs/track_page.dart';
 
-export 'tabs/lists/list_page.dart';
-export 'tabs/lists/group_page.dart';
+export 'tabs/lists/list.dart';
+export 'tabs/lists/group.dart';
 
 export './home.dart';
 export './login.dart';

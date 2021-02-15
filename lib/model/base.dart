@@ -1,9 +1,9 @@
-class ItemBase {
+class MemberBase {
   String title = '';
   String subTitle = '';
   List index = [0, 0, 0, 0];
 
-  ItemBase({this.title, this.subTitle = ''});
+  MemberBase({this.title, this.subTitle = ''});
 }
 
 class GroupBase {

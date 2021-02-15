@@ -1,6 +1,6 @@
 import 'base.dart';
 
-class SmartTask extends ItemBase {
+class SmartTask extends MemberBase {
   String name;
   String describ;
   double time_start;

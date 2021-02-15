@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math';
-import 'package:flutter_planplus/utils/index.dart';
 
-class ItemWidget extends StatefulWidget {
-  ItemWidget({
+class DraggableItem extends StatefulWidget {
+  DraggableItem({
     Key key,
     @required this.title,
     this.subTitle = '',
@@ -19,16 +17,17 @@ class ItemWidget extends StatefulWidget {
     this.colorRight = Colors.red,
     this.onPressed,
     this.onLongPressed,
-    this.onLongPressEnd,
     this.onLeftPressed,
     this.onRightPressed,
     this.onLTRDrived,
     this.onRTLDrived,
     this.locked = false,
+    this.shadowed = false,
     this.sizeFactor = 1.0,
   }) : super(key: key);
 
   final bool locked;
+  final bool shadowed;
   final double sizeFactor;
 
   final String title;
@@ -47,30 +46,29 @@ class ItemWidget extends StatefulWidget {
 
   Function() onPressed = () {};
   Function() onLongPressed = () {};
-  Function(LongPressEndDetails) onLongPressEnd = (LongPressEndDetails) {};
   Function() onLTRDrived = () {};
   Function() onRTLDrived = () {};
   Function() onLeftPressed = () {};
   Function() onRightPressed = () {};
 
   @override
-  _ItemWidgetState createState() => _ItemWidgetState();
+  _DraggableItemState createState() => _DraggableItemState();
 }
 
-class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateMixin {
-  List<IconData> iconLeading = [
+class _DraggableItemState extends State<DraggableItem> with SingleTickerProviderStateMixin {
+  static List<IconData> iconLeading = [
     Icons.radio_button_unchecked,
     Icons.radio_button_checked,
     Icons.check_circle,
   ];
-  List<IconData> iconTale = [
+  static List<IconData> iconTale = [
     Icons.send,
     Icons.close,
   ];
-  List<IconData> iconLeft = [
+  static List<IconData> iconLeft = [
     Icons.star,
   ];
-  List<IconData> iconRight = [
+  static List<IconData> iconRight = [
     Icons.delete,
   ];
   double _height;
@@ -101,20 +99,20 @@ class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateM
           else
             _xVal = _animation.value * _nowX;
         });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed && _chosed) {
+          _nowX = _xVal;
+          _chosed = false;
+          _backWard = true;
+          _controller.reset();
+          _controller.forward();
+          if (_rightWard)
+            widget.onLTRDrived;
+          else
+            widget.onRTLDrived;
+        } else if (status == AnimationStatus.completed && _backWard) _backWard = false;
       });
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed && _chosed) {
-        _nowX = _xVal;
-        _chosed = false;
-        _backWard = true;
-        _controller.reset();
-        _controller.forward();
-        if (_rightWard)
-          widget.onLTRDrived;
-        else
-          widget.onRTLDrived;
-      } else if (status == AnimationStatus.completed && _backWard) _backWard = false;
-    });
     super.initState();
   }
 
@@ -181,12 +179,14 @@ class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateM
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      spreadRadius: 1.0,
-                      blurRadius: 5.0,
-                      offset: Offset(5, 5),
-                    )
+                    widget.shadowed
+                        ? BoxShadow(
+                            color: Colors.black12,
+                            spreadRadius: 1.0,
+                            blurRadius: 5.0,
+                            offset: Offset(5, 5),
+                          )
+                        : BoxShadow(color: Colors.white)
                   ],
                 ),
                 margin: EdgeInsets.symmetric(vertical: 5.5.w),
@@ -273,7 +273,6 @@ class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateM
                 }
               },
               onLongPress: widget.onLongPressed,
-              onLongPressEnd: widget.onLongPressEnd,
             ),
             left: _xVal + 20.0.w,
           ),
@@ -281,10 +280,4 @@ class _ItemWidgetState extends State<ItemWidget> with SingleTickerProviderStateM
       ),
     );
   }
-}
-
-class ItemLongPressedNote extends Notification {
-  final int index;
-
-  ItemLongPressedNote(this.index);
 }

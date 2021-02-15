@@ -27,7 +27,7 @@ class UserDrawer extends StatelessWidget {
           Card(
             child: Column(
               children: <Widget>[
-                GotoItem(
+                FixedItem(
                   title: '用户反馈',
                   iconData: Icons.feedback,
                   callback: () {
@@ -35,7 +35,7 @@ class UserDrawer extends StatelessWidget {
                     Applicat.pageTo(context, Routes.expect);
                   },
                 ),
-                GotoItem(
+                FixedItem(
                   title: '用户必读',
                   iconData: KIcon.ReadMe,
                   callback: () {
@@ -43,7 +43,7 @@ class UserDrawer extends StatelessWidget {
                     Applicat.pageTo(context, Routes.readMe);
                   },
                 ),
-                GotoItem(
+                FixedItem(
                   title: '关于我们',
                   iconData: KIcon.AboutUs,
                   callback: () {
@@ -59,7 +59,7 @@ class UserDrawer extends StatelessWidget {
           Card(
             child: Column(
               children: <Widget>[
-                GotoItem(
+                FixedItem(
                   title: '注销',
                   iconData: KIcon.CheckOut,
                   callback: () {
