@@ -109,11 +109,10 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
           setState(() {
             _onBack = false;
             //回返后对列表元素进行重排序
+            _list.insert(_matchedIndex, _list[_chosedIndex]);
             if (_chosedIndex > _matchedIndex) {
-              _list.insert(_matchedIndex, _list[_chosedIndex]);
               _list.removeAt(_chosedIndex + 1);
             } else if (_chosedIndex < _matchedIndex) {
-              _list.insert(_matchedIndex, _list[_chosedIndex]);
               _list.removeAt(_chosedIndex);
             }
             _chosedIndex = _matchedIndex = -1;

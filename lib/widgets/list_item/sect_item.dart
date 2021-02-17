@@ -44,7 +44,7 @@ class SectableItem extends StatefulWidget {
 
 class _SectableItemState extends State<SectableItem> with SingleTickerProviderStateMixin {
   static List<IconData> _icons = [
-    Icons.list,
+    Icons.format_list_bulleted,
     Icons.delete_forever,
     Icons.star_border,
     Icons.star,
@@ -99,8 +99,8 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
                       setState(() {
                         _bkColor = Colors.white;
                       });
-                    widget.onPressed();
                     });
+                    widget.onPressed();
                   },
                 ),
               ),

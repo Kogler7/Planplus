@@ -34,31 +34,11 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
   double _height;
   double _width;
 
-  int _duration = 200;
+  int _duration = 300;
 
   bool _unfolded = false;
 
-  AnimationController _controller;
-  Animation<double> _animation;
-
   Color _bkColor = Colors.white;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 250),
-    );
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.decelerate);
-    _animation = Tween(begin: 1.0, end: 0.0).animate(_animation)..addListener(() {});
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +77,8 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                       setState(() {
                         _bkColor = Colors.white;
                       });
-                      widget.onPressed();
                     });
+                    widget.onPressed();
                   },
                 ),
               ),
@@ -111,8 +91,9 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                     duration: Duration(milliseconds: _duration),
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: _duration),
+                      curve: Curves.easeInOut,
                       height: _height,
-                      width: _unfolded ? _height / 2 : _height,
+                      width: _unfolded ? _height / 3 : _height,
                       child: Icon(
                         Icons.dns_rounded,
                         color: KColor.primaryColor,
@@ -142,7 +123,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                         clipBehavior: Clip.antiAlias,
                         child: Ink(
                           child: InkWell(
-                            onTap: (){},
+                            onTap: () {},
                             child: Icon(
                               Icons.more_vert,
                               color: Colors.black54,
@@ -160,6 +141,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                     child: TweenAnimationBuilder(
                       duration: Duration(milliseconds: _duration),
                       tween: Tween(begin: 0.0, end: _unfolded ? -1.57 : 0.0),
+                      curve: Curves.easeInOut,
                       builder: (BuildContext ctx, value, Widget child) {
                         return Center(
                           child: Transform.rotate(
