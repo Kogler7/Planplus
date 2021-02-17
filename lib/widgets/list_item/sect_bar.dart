@@ -9,13 +9,15 @@ class SectionBar extends StatefulWidget {
     @required this.title,
     this.suHeight = 110,
     this.suWidth = 750,
+    this.shadowed = false,
+    this.unfolded = false,
+    this.sizeFactor = 1.0,
     this.onPressed,
     this.onLongPressed,
-    this.shadowed = false,
-    this.sizeFactor = 1.0,
   }) : super(key: key);
 
   final bool shadowed;
+  final bool unfolded;
   final double sizeFactor;
 
   final String title;
@@ -36,7 +38,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
 
   int _duration = 300;
 
-  bool _unfolded = false;
+  bool _unfolded;
 
   Color _bkColor = Colors.white;
 
@@ -44,6 +46,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     _height = ScreenUtil().setWidth(widget.suHeight) * widget.sizeFactor;
     _width = ScreenUtil().setWidth(widget.suWidth) * widget.sizeFactor;
+    _unfolded = widget.unfolded;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       child: Container(
@@ -94,10 +97,12 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                       curve: Curves.easeInOut,
                       height: _height,
                       width: _unfolded ? _height / 3 : _height,
-                      child: Icon(
-                        Icons.dns_rounded,
-                        color: KColor.primaryColor,
-                      ),
+                      child: widget.sizeFactor != 0
+                          ? Icon(
+                              Icons.dns_rounded,
+                              color: KColor.primaryColor,
+                            )
+                          : Container(),
                     ),
                   ),
                 ),
@@ -146,7 +151,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                         return Center(
                           child: Transform.rotate(
                             angle: value,
-                            child: Icon(Icons.arrow_left, color: Colors.black54),
+                            child: widget.sizeFactor != 0 ? Icon(Icons.keyboard_arrow_left, color: Colors.black54) : Container(),
                           ),
                         );
                       },

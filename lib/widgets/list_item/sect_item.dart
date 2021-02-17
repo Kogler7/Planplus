@@ -122,7 +122,12 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
                   SizedBox(
                     height: _height,
                     width: _height,
-                    child: Icon(_icons[widget.leadingIndex], color: widget.colorLeading),
+                    child: widget.sizeFactor != 0
+                        ? Icon(
+                            _icons[widget.leadingIndex],
+                            color: widget.colorLeading,
+                          )
+                        : Container(),
                   ),
                   Expanded(
                     child: Text(

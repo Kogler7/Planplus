@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list.dart';
+import 'package:flutter_planplus/model/index.dart';
 
 class ModelListPage extends StatefulWidget {
   @override
@@ -9,6 +10,6 @@ class ModelListPage extends StatefulWidget {
 class _ModelListPageState extends State<ModelListPage> {
   @override
   Widget build(BuildContext context) {
-    return ListPage();
+    return ListPage(groups: KGroupBase.modelGroups);
   }
 }

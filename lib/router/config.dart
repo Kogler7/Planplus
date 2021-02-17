@@ -28,7 +28,9 @@ class FluroConfigor{
       handlerFunc: (ctx, params) => ReadMe(),
     ),
     "${Routes.groupPage}": Handler(
-      handlerFunc: (ctx, params) => GroupDetailPage(),
+      handlerFunc: (ctx, params){
+        return GroupPage();
+      },
     ),
   };
   //静态方法

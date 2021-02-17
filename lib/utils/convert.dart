@@ -6,7 +6,7 @@ class ConvertUtil{
   }
 
   static String fluroCnParamsDecode(String tgtCn){
-    var list = List<int>();
+    var list = [];
     jsonDecode(tgtCn).forEach(list.add);
     String value = Utf8Decoder().convert(list);
     return value;

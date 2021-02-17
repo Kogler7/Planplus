@@ -7,52 +7,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dart:async';
 
-List<MemberBase> itemList = [
-  MemberBase(title: 'Monday', subTitle: ''),
-  MemberBase(title: 'Tuesday', subTitle: '哈哈哈'),
-  MemberBase(title: 'Wednesday', subTitle: ''),
-  MemberBase(title: 'Thursday', subTitle: '我是魏振杰'),
-  MemberBase(title: 'Friday', subTitle: ''),
-  MemberBase(title: 'Saturday', subTitle: '你好呀'),
-  MemberBase(title: 'Sunday', subTitle: ''),
-  MemberBase(title: 'Monday', subTitle: '你是谁？'),
-  MemberBase(title: 'Tuesday', subTitle: ''),
-  MemberBase(title: 'Wednesday', subTitle: '不不不'),
-  MemberBase(title: 'Thursday', subTitle: ''),
-  MemberBase(title: 'Friday', subTitle: '我是你'),
-  MemberBase(title: 'Saturday', subTitle: ''),
-  MemberBase(title: 'Sunday', subTitle: '略略略'),
-  MemberBase(title: 'Monday', subTitle: ''),
-  MemberBase(title: 'Tuesday', subTitle: '哈哈哈'),
-  MemberBase(title: 'Wednesday', subTitle: ''),
-  MemberBase(title: 'Thursday', subTitle: '我是魏振杰'),
-  MemberBase(title: 'Friday', subTitle: ''),
-  MemberBase(title: 'Saturday', subTitle: '你好呀'),
-  MemberBase(title: 'Sunday', subTitle: ''),
-  MemberBase(title: 'Monday', subTitle: '你是谁？'),
-  MemberBase(title: 'Tuesday', subTitle: ''),
-  MemberBase(title: 'Wednesday', subTitle: '不不不'),
-  MemberBase(title: 'Thursday', subTitle: ''),
-  MemberBase(title: 'Friday', subTitle: '我是你'),
-  MemberBase(title: 'Saturday', subTitle: ''),
-  MemberBase(title: 'Sunday', subTitle: '略略略'),
-];
+class GroupPage extends StatefulWidget {
+  final GroupBase groupBase;
 
-class GroupDetailPage extends StatefulWidget {
-  final String groupName;
-
-  GroupDetailPage({Key key, this.groupName = 'Test'}) : super(key: key);
+  GroupPage({Key key, @required this.groupBase}) : super(key: key);
 
   @override
-  _GroupDetailPageState createState() => _GroupDetailPageState();
+  _GroupPageState createState() => _GroupPageState();
 }
 
-class _GroupDetailPageState extends State<GroupDetailPage> with SingleTickerProviderStateMixin {
+class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMixin {
   final _scrollController = ScrollController();
   AnimationController _transController;
   Animation<double> _animation;
 
-  List<MemberBase> _list = itemList;
+  GroupBase _groupBase;
+  String _groupName;
+  List<MemberBase> _list;
 
   int _chosedIndex = -1; //选中的item序号
   int _matchedIndex = -1; //匹配到的item序号
@@ -93,6 +64,10 @@ class _GroupDetailPageState extends State<GroupDetailPage> with SingleTickerProv
 
   @override
   void initState() {
+    _groupBase = widget.groupBase;
+    _groupName = _groupBase.title;
+    _list = _groupBase.members;
+
     _transController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -136,7 +111,7 @@ class _GroupDetailPageState extends State<GroupDetailPage> with SingleTickerProv
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          child: Text(widget.groupName),
+          child: Text(_groupName),
           onTap: () {
             _scrollController.animateTo(
               -20.0,

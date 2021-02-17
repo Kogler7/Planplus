@@ -1,4 +1,5 @@
 export 'built_in/dev_info.dart';
+export 'built_in/base_house.dart';
 
 export 'user_info.dart';
 export 'list.dart';

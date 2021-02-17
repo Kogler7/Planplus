@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 const MaterialColor white = const MaterialColor(
@@ -57,4 +58,22 @@ class KColor {
   static const Color fabList = Colors.lightGreenAccent; //ListPageButton颜色
   static const Color fabTrack = Colors.white; //TrackPageButton颜色
   static const Color fabJudge = Colors.yellowAccent; //JudgePageButton颜色
+}
+
+class KRndColor {
+  static Color get newColor => rndColors[Random.secure().nextInt(10)];
+
+  static const rndColors = [
+    Color(0xAA795548),
+    Color(0xAA673AB7),
+    Color(0xAAE91E63),
+    Color(0xAAF44336),
+    Color(0xAAFFA000),
+    Color(0xAAFFEE3B),
+    Color(0xAACDDC39),
+    Color(0xAA4CAF50),
+    Color(0xAA009688),
+    Color(0xAA00BCD4),
+    Color(0xAA03A9F4),
+  ];
 }

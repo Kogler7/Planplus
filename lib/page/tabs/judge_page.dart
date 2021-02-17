@@ -15,7 +15,7 @@ class _JudgePageState extends State<JudgePage> {
   Widget build(BuildContext context) {
     return Container(
       color: KColor.primaryColor,
-      child: GroupDetailPage(),
+      child: GroupPage(),
     );
   }
 }
