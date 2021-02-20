@@ -108,6 +108,9 @@ class _HomePageState extends State<HomePage> {
           title: widget.titles[_selectedIndex],
           centerTitle: true,
           actions: <Widget>[IconButton(icon: Icon(Icons.search), onPressed: () {})],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))
+          ),
         ),
         body: widget.pageViews[_selectedIndex],
         drawer: UserDrawer(user: DevInfo.Kogler),
