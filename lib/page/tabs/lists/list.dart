@@ -207,11 +207,11 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
 
   //获取flexlist元素的偏移
   double indexOffset(index) {
-    int _index = index;
+    int _num = index;
     for (int i = 0; i < index; i++) {
-      if (isHidMap(i)) _index--;
+      if (isHidMap(i)) _num--;
     }
-    return _index * _itemHeight - _scrollController.offset + _expandedHeight + _dividerHeight;
+    return _num * _itemHeight - _scrollController.offset + _expandedHeight + _dividerHeight;
   }
 
   //临近可见索引（要求本身可见，不会去检查讨论自身可见性）
