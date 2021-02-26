@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_planplus/config/index.dart';
 
-class FixedItem extends StatelessWidget{
+class FixedItem extends StatelessWidget {
   final IconData iconData;
   final String title;
   final VoidCallback callback;
@@ -12,7 +12,7 @@ class FixedItem extends StatelessWidget{
     this.title,
     this.iconData,
     this.callback,
-    this.color
+    this.color = Colors.black54,
   });
 
   @override
@@ -33,13 +33,10 @@ class FixedItem extends StatelessWidget{
                 color: color,
               ),
             ),
-            Padding(padding: EdgeInsets.only(left:35.0.w)),
+            Padding(padding: EdgeInsets.only(left: 35.0.w)),
             Text(
               title,
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(28.0),
-                color: KColor.gotoItemTextColor
-              ),
+              style: TextStyle(fontSize: ScreenUtil().setSp(28.0), color: KColor.gotoItemTextColor),
             ),
             Expanded(
               child: Container(

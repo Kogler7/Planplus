@@ -41,6 +41,7 @@ class KColor {
   static const Color secondaryHighlightColor = Colors.deepOrange; //默认次要颜色（强调）
   static const Color tipColor = Colors.lightGreen; //默认提示颜色
   static const Color tipHighlightColor = Colors.greenAccent; //默认提示颜色（强调）
+  static const Color backGround = Color(0xFFFFF5E2); //默认背景颜色
   // Test
   static const Color defaultTextColor = Colors.redAccent; //默认文本颜色
   static const Color defaultButtonColor = Colors.redAccent; //默认按钮颜色
@@ -51,13 +52,9 @@ class KColor {
   static const Color toastTextColor = Colors.white; //toast提示文本颜色
   static const Color indexTabSelectedColor = Colors.red; //选项卡按钮选中颜色
   static const Color indexTabUnselectedColor = Colors.grey; //选项卡按钮选未中颜色
-//text
+///text
   static const Color gotoItemTextColor = Colors.black54; //图标文本颜色
   static const Color gotoItemIconColor = Colors.grey; //图标箭头颜色
-//FloatingActionButtons
-  static const Color fabList = Colors.lightGreenAccent; //ListPageButton颜色
-  static const Color fabTrack = Colors.white; //TrackPageButton颜色
-  static const Color fabJudge = Colors.yellowAccent; //JudgePageButton颜色
 }
 
 class KRndColor {

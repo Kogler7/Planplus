@@ -4,6 +4,7 @@ import 'package:flutter_planplus/widgets/list_item/sect_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'group.dart';
+import 'package:flutter_planplus/config/index.dart';
 
 class ListPage extends StatefulWidget {
   final List<GroupBase> groups;
@@ -220,6 +221,7 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
     for (int i = index - 1; i >= 0; i++) {
       if (!isHidMem(i)) return i; //极简算法，消耗一定性能
     }
+    return index; //不应该出现的情况
   }
 
   int nextIndex(index) {
@@ -227,6 +229,7 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
     for (int i = index + 1; i < _flexList.length; i++) {
       if (!isHidMem(i)) return i; //极简算法，消耗一定性能
     }
+    return index; //不应该出现的情况
   }
 
   ///
@@ -301,7 +304,7 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     bool _actorAlive = _onMove || _onBack;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       body: Listener(
         child: Stack(
           children: [
@@ -312,7 +315,7 @@ class _ListPageState extends State<ListPage> with SingleTickerProviderStateMixin
                   physics: BouncingScrollPhysics(),
                   slivers: [
                     SliverAppBar(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.transparent,
                       leading: Icon(
                         Icons.lock,
                         color: KColor.primaryColor,

@@ -5,6 +5,7 @@ import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
+import 'package:flutter_planplus/widgets/glassic_box.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tabs/lists/list.dart';
 import 'tabs/track_page.dart';
@@ -28,11 +29,7 @@ class HomePage extends StatefulWidget {
     KIcon.PETrackPage,
     KIcon.ListsPage,
     KIcon.JudgePage,
-  ];
-  List<Color> buttonColors = [
-    KColor.fabTrack,
-    KColor.fabList,
-    KColor.fabJudge,
+    KIcon.UserPage,
   ];
   List<Widget> titles = [];
 
@@ -41,21 +38,17 @@ class HomePage extends StatefulWidget {
       TrackPage(),
       listPages,
       JudgePage(),
+      UserDrawer(user: DevInfo.Kogler),
     ];
     titles = <Widget>[
-      Text('02.09 Tue'),
+      Text('02.09 Tue', style: TextStyle(color: Colors.black54)),
       MicroTabBar(height: 66.0.h, width: 440.0.w, tabs: <Widget>[
-        Tab(
-          text: '模版',
-        ),
-        Tab(
-          text: '任务',
-        ),
-        Tab(
-          text: '问卷',
-        ),
+        Tab(child: Text('模板', style: TextStyle(color: Colors.black54))),
+        Tab(child: Text('任务', style: TextStyle(color: Colors.black54))),
+        Tab(child: Text('问卷', style: TextStyle(color: Colors.black54))),
       ]),
-      Text('Kogler'),
+      Text('Judge', style: TextStyle(color: Colors.black54)),
+      Text('Kogler', style: TextStyle(color: Colors.black54)),
     ];
   }
 
@@ -67,31 +60,50 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   //根据选择改变剩余按钮
-  List<Widget> _selectButtons(int index) {
-    List<int> _index = [0, 1, 2];
-    _index.remove(_selectedIndex);
+  List<Widget> getButtons(int index) {
     return <Widget>[
       IconButton(
-        padding: EdgeInsets.only(right: 35.0.w),
         icon: Icon(
-          widget.icons[_index[0]],
+          widget.icons[0],
+          color: 0 == _selectedIndex ? Colors.red : Colors.black54,
         ),
-        color: widget.buttonColors[_index[0]],
         onPressed: () {
           setState(() {
-            _selectedIndex = _index[0];
+            _selectedIndex = 0;
           });
         },
       ),
       IconButton(
-        padding: EdgeInsets.only(left: 35.0.w),
         icon: Icon(
-          widget.icons[_index[1]],
+          widget.icons[1],
+          color: 1 == _selectedIndex ? Colors.red : Colors.black54,
         ),
-        color: widget.buttonColors[_index[1]],
         onPressed: () {
           setState(() {
-            _selectedIndex = _index[1];
+            _selectedIndex = 1;
+          });
+        },
+      ),
+      SizedBox(width: 40),
+      IconButton(
+        icon: Icon(
+          widget.icons[2],
+          color: 2 == _selectedIndex ? Colors.red : Colors.black54,
+        ),
+        onPressed: () {
+          setState(() {
+            _selectedIndex = 2;
+          });
+        },
+      ),
+      IconButton(
+        icon: Icon(
+          widget.icons[3],
+          color: 3 == _selectedIndex ? Colors.red : Colors.black54,
+        ),
+        onPressed: () {
+          setState(() {
+            _selectedIndex = 3;
           });
         },
       ),
@@ -102,37 +114,48 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: KColor.primaryColor,
-          title: widget.titles[_selectedIndex],
-          centerTitle: true,
-          actions: <Widget>[IconButton(icon: Icon(Icons.search), onPressed: () {})],
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image(
+            image: KImage.mainBack,
+            fit: BoxFit.cover,
           ),
-        ),
-        body: widget.pageViews[_selectedIndex],
-        drawer: UserDrawer(user: DevInfo.Kogler),
-        bottomNavigationBar: BottomAppBar(
-          color: KColor.primaryColor,
-          shape: CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.max,
-            children: _selectButtons(_selectedIndex),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: widget.titles[_selectedIndex],
+              centerTitle: true,
+              actions: <Widget>[IconButton(icon: Icon(Icons.search, color: Colors.black54), onPressed: () {})],
+            ),
+            body: widget.pageViews[_selectedIndex],
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.transparent,
+              elevation: 0,
+              shape: CircularNotchedRectangle(),
+              child: Padding(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisSize: MainAxisSize.max,
+                  children: getButtons(_selectedIndex),
+                ),
+                padding: EdgeInsets.only(bottom: 8),
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                color: Colors.white60,
+              ),
+              onPressed: () {
+                //Applicat.pageTo(context, Routes.groupPage);
+              },
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            widget.icons[_selectedIndex],
-            color: widget.buttonColors[_selectedIndex],
-          ),
-          onPressed: () {
-            //Applicat.pageTo(context, Routes.groupPage);
-          },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        ],
       ),
     );
   }

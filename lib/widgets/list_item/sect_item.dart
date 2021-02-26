@@ -12,6 +12,7 @@ class SectableItem extends StatefulWidget {
     this.markIndex = 0,
     this.colorLeading = Colors.lightBlue,
     this.colorMark = Colors.yellow,
+    this.colorBack = Colors.transparent,
     this.onPressed,
     this.onLongPressed,
     this.sected = false,
@@ -34,6 +35,7 @@ class SectableItem extends StatefulWidget {
 
   final Color colorLeading;
   final Color colorMark;
+  final Color colorBack;
 
   Function() onPressed = () {};
   Function() onLongPressed = () {};
@@ -61,7 +63,13 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
   double _height;
   double _width;
 
-  Color _bkColor = Colors.white;
+  Color _bkColor;
+
+  @override
+  void initState() {
+    _bkColor = widget.colorBack;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +90,7 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
                     blurRadius: 5.0,
                     offset: Offset(0, 0),
                   )
-                : BoxShadow(color: Colors.white)
+                : BoxShadow(color: widget.colorBack)
           ],
         ),
         child: Stack(
@@ -97,7 +105,7 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
                     });
                     Future.delayed(Duration(milliseconds: 300), () {
                       setState(() {
-                        _bkColor = Colors.white;
+                        _bkColor = widget.colorBack;
                       });
                     });
                     widget.onPressed();

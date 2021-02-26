@@ -13,7 +13,9 @@ class UserDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return SizedBox(
+      height: 1334.h,
+      width: 750.w,
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(

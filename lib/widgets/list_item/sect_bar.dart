@@ -11,6 +11,7 @@ class SectionBar extends StatefulWidget {
     this.suWidth = 750,
     this.shadowed = false,
     this.unfolded = false,
+    this.colorBack = Colors.transparent,
     this.sizeFactor = 1.0,
     this.onPressed,
     this.onLongPressed,
@@ -24,6 +25,8 @@ class SectionBar extends StatefulWidget {
 
   final double suHeight;
   final double suWidth;
+
+  final Color colorBack;
 
   Function() onPressed = () {};
   Function() onLongPressed = () {};
@@ -40,7 +43,13 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
 
   bool _unfolded;
 
-  Color _bkColor = Colors.white;
+  Color _bkColor;
+
+  @override
+  void initState() {
+    _bkColor = widget.colorBack;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +71,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                     blurRadius: 5.0,
                     offset: Offset(0, 0),
                   )
-                : BoxShadow(color: Colors.white)
+                : BoxShadow(color: widget.colorBack)
           ],
         ),
         child: Stack(
@@ -78,7 +87,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                     });
                     Future.delayed(Duration(milliseconds: 300), () {
                       setState(() {
-                        _bkColor = Colors.white;
+                        _bkColor = widget.colorBack;
                       });
                     });
                     widget.onPressed();

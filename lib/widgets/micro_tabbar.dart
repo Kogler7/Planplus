@@ -13,9 +13,9 @@ class MicroTabBar extends StatelessWidget{
   @override
   MicroTabBar({Key key,
     this.tabs,this.width,this.height,
-    this.bkColor = KColor.primaryColor,
+    this.bkColor = Colors.white54,
     this.circular = 12.0,
-    this.elevation = 3.0
+    this.elevation = 0
   }):super(key: key) {
     for (int i = 1; i < tabs.length; i++) {
       dividers.add(

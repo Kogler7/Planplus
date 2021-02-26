@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/page/index.dart';
+import 'package:flutter_planplus/widgets/glassic_box.dart';
 
 class JudgePage extends StatefulWidget {
   JudgePage({Key key}) : super(key: key);
@@ -13,9 +14,11 @@ class JudgePage extends StatefulWidget {
 class _JudgePageState extends State<JudgePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: KColor.primaryColor,
-      child: GroupPage(),
+    return Center(
+      child: GlassicGround(
+        blur: 0,
+        child: Text('hahaha',style: TextStyle(color: Colors.black54)),
+      ),
     );
   }
 }
