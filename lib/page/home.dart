@@ -2,18 +2,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
+import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
-import 'package:flutter_planplus/widgets/glassic_box.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'tabs/list_page.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
 import 'tabs/user_page.dart';
 import 'package:flutter_planplus/model/built_in/dev_info.dart';
 import 'package:flutter_planplus/widgets/micro_tabbar.dart';
-import 'package:flutter_planplus/router/index.dart';
 
 class HomePage extends StatefulWidget {
   final String barTitle = 'Planplus';
@@ -48,7 +46,7 @@ class HomePage extends StatefulWidget {
         Tab(child: Text('问卷', style: TextStyle(color: Colors.black54))),
       ]),
       Text('Judge', style: TextStyle(color: Colors.black54)),
-      Text('Kogler', style: TextStyle(color: Colors.black54)),
+      Text('User', style: TextStyle(color: Colors.black54)),
     ];
   }
 
@@ -58,6 +56,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  int _themeIndex = 0;
 
   //根据选择改变剩余按钮
   List<Widget> getButtons(int index) {
@@ -65,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       IconButton(
         icon: Icon(
           widget.icons[0],
-          color: 0 == _selectedIndex ? Colors.red : Colors.black54,
+          color: 0 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
           setState(() {
@@ -76,7 +75,7 @@ class _HomePageState extends State<HomePage> {
       IconButton(
         icon: Icon(
           widget.icons[1],
-          color: 1 == _selectedIndex ? Colors.red : Colors.black54,
+          color: 1 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
           setState(() {
@@ -88,7 +87,7 @@ class _HomePageState extends State<HomePage> {
       IconButton(
         icon: Icon(
           widget.icons[2],
-          color: 2 == _selectedIndex ? Colors.red : Colors.black54,
+          color: 2 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
           setState(() {
@@ -99,7 +98,7 @@ class _HomePageState extends State<HomePage> {
       IconButton(
         icon: Icon(
           widget.icons[3],
-          color: 3 == _selectedIndex ? Colors.red : Colors.black54,
+          color: 3 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
           setState(() {
@@ -111,6 +110,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    themeIndexStream.stream.listen((index) {
+      setState(() {
+        _themeIndex = index;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
@@ -118,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         fit: StackFit.expand,
         children: [
           Image(
-            image: KImage.mainBack,
+            image: KImage.mainBack(_themeIndex),
             fit: BoxFit.cover,
           ),
           Scaffold(
@@ -127,7 +136,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: widget.titles[_selectedIndex],
-              centerTitle: true,
+              centerTitle: _selectedIndex == 1 ? true : false,
               actions: <Widget>[IconButton(icon: Icon(Icons.search, color: Colors.black54), onPressed: () {})],
             ),
             body: widget.pageViews[_selectedIndex],

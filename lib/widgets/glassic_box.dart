@@ -20,7 +20,6 @@ class GlassicGround extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Image(
-          image: KImage.mainBack,
           fit: BoxFit.cover,
         ),
         child,

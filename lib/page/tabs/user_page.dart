@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/utils/simple_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/model/index.dart';
@@ -18,23 +19,38 @@ class UserPage extends StatelessWidget {
       width: 750.w,
       child: ListView(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(user.name),
-            accountEmail: Text(user.email),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: user.avatar,
+          SizedBox(
+            height: 100,
+            child: Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  height: 120,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: user.avatar),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(user.name,style: TextStyle(color: Colors.black,fontSize: 22)),
+                    Text(user.email,style: TextStyle(color: Colors.black54,fontSize: 12)),
+                  ],
+                ),
+              ],
             ),
-            decoration: BoxDecoration(image: DecorationImage(image: user.bkground, fit: BoxFit.cover)),
           ),
           Card(
             child: Column(
               children: <Widget>[
                 FixedItem(
-                  title: '用户反馈',
-                  iconData: Icons.feedback,
+                  title: '颜色主题',
+                  iconData: Icons.invert_colors,
                   callback: () {
-                    ToastUtil.showBtmToast('用户反馈');
-                    Applicat.pageTo(context, Routes.expect);
+                    ToastUtil.showBtmToast('颜色主题');
+                    showThemeDialog(context);
                   },
                 ),
                 FixedItem(

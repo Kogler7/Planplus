@@ -10,5 +10,5 @@ class KImage {
   static const AssetImage logo_w = AssetImage('assets/images/logo_w.png');
   static const AssetImage splash_bk = AssetImage('assets/images/splash_bk.jpg');
   static const AssetImage splash_ft = AssetImage('assets/images/splash_ft.png');
-  static const AssetImage mainBack = AssetImage('assets/images/backGround.png');
+  static AssetImage mainBack(int index) => AssetImage('assets/images/main_back/main_back$index.png');
 }

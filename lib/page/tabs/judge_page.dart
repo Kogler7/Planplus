@@ -15,10 +15,7 @@ class _JudgePageState extends State<JudgePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GlassicGround(
-        blur: 0,
-        child: Text('hahaha',style: TextStyle(color: Colors.black54)),
-      ),
+      child: Text('hahaha',style: TextStyle(color: Colors.black54)),
     );
   }
 }

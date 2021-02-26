@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter_planplus/config/image.dart';
+import 'package:flutter_planplus/config/index.dart';
 
 class CardScroll extends StatelessWidget {
   final double currentCard;
@@ -73,7 +74,7 @@ class CardScroll extends StatelessWidget {
                       fit: StackFit.expand,
                       children: <Widget>[
                         Image(
-                          image: KImage.cardImg,
+                          image: KImage.mainBack(6 - currentCard.toInt()),
                           fit: BoxFit.cover,
                         ),
                         Align(
@@ -85,7 +86,7 @@ class CardScroll extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                 child: Text(
-                                  weekdays[6 - currentCard.toInt()], //待修改
+                                  KString.Themes[6 - currentCard.toInt()], //待修改
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25.0,
