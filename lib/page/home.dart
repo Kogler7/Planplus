@@ -7,10 +7,10 @@ import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
 import 'package:flutter_planplus/widgets/glassic_box.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'tabs/lists/list.dart';
+import 'tabs/list_page.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
-import './user.dart';
+import 'tabs/user_page.dart';
 import 'package:flutter_planplus/model/built_in/dev_info.dart';
 import 'package:flutter_planplus/widgets/micro_tabbar.dart';
 import 'package:flutter_planplus/router/index.dart';
@@ -38,7 +38,7 @@ class HomePage extends StatefulWidget {
       TrackPage(),
       listPages,
       JudgePage(),
-      UserDrawer(user: DevInfo.Kogler),
+      UserPage(user: DevInfo.Kogler),
     ];
     titles = <Widget>[
       Text('02.09 Tue', style: TextStyle(color: Colors.black54)),

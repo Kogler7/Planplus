@@ -6,10 +6,10 @@ import 'package:flutter_planplus/widgets/index.dart';
 import 'package:flutter_planplus/utils/index.dart';
 import 'package:flutter_planplus/router/index.dart';
 
-class UserDrawer extends StatelessWidget {
+class UserPage extends StatelessWidget {
   final UserInfo user;
 
-  UserDrawer({Key key, this.user}) : super(key: key);
+  UserPage({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

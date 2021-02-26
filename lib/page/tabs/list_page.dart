@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/index.dart';
-import 'package:flutter_planplus/widgets/list_item/sect_item.dart';
+import 'package:flutter_planplus/widgets/items/sect_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
-import 'group.dart';
+import 'lists/group_page.dart';
 import 'package:flutter_planplus/config/index.dart';
 
 class ListPage extends StatefulWidget {

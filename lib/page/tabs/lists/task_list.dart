@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'list.dart';
+import '../list_page.dart';
 import 'package:flutter_planplus/model/index.dart';
 
 class TaskListPage extends StatefulWidget {
