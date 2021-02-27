@@ -6,4 +6,3 @@ export 'query.dart';
 export 'smart_task.dart';
 export 'base.dart';
 export 'time.dart';
-export 'global.dart';

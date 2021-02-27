@@ -1,6 +1,7 @@
 //Planplus主页
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../global.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
