@@ -14,8 +14,20 @@ class JudgePage extends StatefulWidget {
 class _JudgePageState extends State<JudgePage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('hahaha',style: TextStyle(color: Colors.black54)),
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (ctx, index) {
+        return GlassicContainer(
+          padding: EdgeInsets.only(top: 100),
+          width: 200,
+          height: 200,
+          borderRadius: 15,
+          linearGradient: LinearGradient(colors: [Colors.white54, Colors.black54]),
+          border: 5,
+          blur: 3,
+          borderGradient: LinearGradient(colors: [Colors.black54, Colors.white54]),
+        );
+      },
     );
   }
 }

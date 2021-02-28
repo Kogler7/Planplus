@@ -131,6 +131,16 @@ class _HomePageState extends State<HomePage> {
             image: KImage.mainBack(_themeIndex),
             fit: BoxFit.cover,
           ),
+          ///效率有待优化
+          GlassicContainer(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            borderRadius: 0,
+            linearGradient: LinearGradient(colors: [Colors.white54, Colors.white54]),
+            border: 0,
+            blur: 3,
+            borderGradient: LinearGradient(colors: [Colors.white54, Colors.white54]),
+          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
