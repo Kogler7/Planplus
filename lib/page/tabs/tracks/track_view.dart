@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/widgets/index.dart';
 
-class TaskSpan extends StatefulWidget {
-  TaskSpan({Key key}) : super(key: key);
+class TrackView extends StatefulWidget {
+  TrackView({Key key}) : super(key: key);
 
   @override
-  _TaskSpanState createState() => _TaskSpanState();
+  _TrackViewState createState() => _TrackViewState();
 }
 
-class _TaskSpanState extends State<TaskSpan> {
+class _TrackViewState extends State<TrackView> {
+  final _scrollController = ScrollController();
+
   @override
-  Widget build(BuildContext context) {
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext ctx) {
     return Stack(
       children: [
-        TimeRuler(),
-        PlanTrack(),
+        Padding(
+          padding: EdgeInsets.only(left: 70, right: 30),
+          child: Container(color: Colors.lightGreen),
+        ),
+        TimeRuler(
+          context: ctx,
+          scrollController: _scrollController,
+          quarterHeight: 30,
+          interval: 30,
+        ),
         ExecutionTrack(),
       ],
     );

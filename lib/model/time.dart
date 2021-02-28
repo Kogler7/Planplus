@@ -90,13 +90,13 @@ class Timing {
   void cut() {}
 }
 
-class Window {
-  TimedSpan timeSpan;
-  double height;
+class Viewport {
+  var timeSpan = TimedSpan();
+  double quarterHeight;
 
-  Window({
+  Viewport({
     this.timeSpan,
-    this.height,
+    this.quarterHeight,
   });
 }
 

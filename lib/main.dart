@@ -1,13 +1,17 @@
 // Copyright 2021 The Planplus Authors. All rights reserved.
-// Snapshot 21s04e belongs to Version 0.1.0 beta 1.
+// Snapshot 21s04f belongs to Version 0.1.0 beta 1.
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/global.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluro/fluro.dart';
 import './config/index.dart';
 import './page/index.dart';
 import './router/index.dart';
 
-void main() => runApp(Planplus());
+void main() {
+  configure(); //初始化配置
+  runApp(Planplus());
+}
 
 class Planplus extends StatelessWidget {
   @override
@@ -20,7 +24,7 @@ class Planplus extends StatelessWidget {
     Applicat.router = router;
 
     return ScreenUtilInit(
-      child: MaterialApp(
+      builder: () => MaterialApp(
         title: 'Planplus',
         //app标识
         debugShowCheckedModeBanner: false,
@@ -34,4 +38,10 @@ class Planplus extends StatelessWidget {
       designSize: Size(750, 1334),
     );
   }
+}
+
+void configure() {
+  ///尚未做销毁工作
+  secondPeriodicStream = Stream.periodic(Duration(seconds: 1), (int) => 1).asBroadcastStream();
+  minutePeriodicStream = Stream.periodic(Duration(minutes: 1), (int) => 1).asBroadcastStream();
 }

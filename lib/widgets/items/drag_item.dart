@@ -108,9 +108,9 @@ class _DraggableItemState extends State<DraggableItem> with SingleTickerProvider
           _controller.reset();
           _controller.forward();
           if (_rightWard)
-            widget.onLTRDrived;
+            widget.onLTRDrived();
           else
-            widget.onRTLDrived;
+            widget.onRTLDrived();
         } else if (status == AnimationStatus.completed && _backWard) _backWard = false;
       });
     super.initState();

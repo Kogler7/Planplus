@@ -10,6 +10,6 @@ class PlanTrack extends StatefulWidget {
 class _PlanTrackState extends State<PlanTrack> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(color: Colors.lightGreen,);
   }
 }

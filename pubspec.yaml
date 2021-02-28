@@ -1,5 +1,5 @@
 name: flutter_planplus
-description: A new Flutter application.
+description: An app for time&task management.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -24,9 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   fluro: ^1.7.8
-  fluttertoast: ^7.1.6
-  flutter_screenutil: ^4.0.2+3
-  shared_preferences: ^0.5.12+4
+  fluttertoast: ^7.1.8
+  flutter_screenutil: ^4.0.3+2
+  shared_preferences: ^2.0.1
   flutter_custom_calendar:
     git: https://github.com/LXD312569496/flutter_custom_calendar.git
 
