@@ -1,5 +1,5 @@
 // Copyright 2021 The Planplus Authors. All rights reserved.
-// Snapshot 21s04f belongs to Version 0.1.0 beta 1.
+// Snapshot 21s04g belongs to Version 0.1.0 beta 1.
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/global.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +29,7 @@ class Planplus extends StatelessWidget {
         //app标识
         debugShowCheckedModeBanner: false,
         onGenerateRoute: Applicat.router.generator,
-        //生成路由回调函数，当导航命名路由时，用此来生成界面
+        ///此处theme并没有得到应用，应考虑设置默认textStyle
         theme: ThemeData(
           primarySwatch: KColor.primaryHighlightColor,
         ),
@@ -43,5 +43,6 @@ class Planplus extends StatelessWidget {
 void configure() {
   ///尚未做销毁工作
   secondPeriodicStream = Stream.periodic(Duration(seconds: 1), (int) => 1).asBroadcastStream();
+  ///尚不能准时发送消息
   minutePeriodicStream = Stream.periodic(Duration(minutes: 1), (int) => 1).asBroadcastStream();
 }

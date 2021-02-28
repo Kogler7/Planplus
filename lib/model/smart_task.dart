@@ -3,7 +3,7 @@ import 'base.dart';
 class SmartTask extends MemberBase {
   String name;
   String describ;
-  double time_start;
+  double timeStart;
 
   SmartTask({
     this.name,

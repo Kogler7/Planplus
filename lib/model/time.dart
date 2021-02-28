@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class TimedSpan {
   var time = DateTime.now();
@@ -64,14 +63,17 @@ class TimeConstraint {
   ///尚未完成
   bool setByStart(LimitedSpan sp) {
     if (timeRigid == TimeRigid.start) return false;
+    return true;
   }
 
   bool setByEnd(LimitedSpan sp) {
     if (timeRigid == TimeRigid.end) return false;
+    return true;
   }
 
   bool setBySpan(LimitedSpan sp) {
     if (timeRigid == TimeRigid.span) return false;
+    return true;
   }
 }
 
@@ -90,11 +92,11 @@ class Timing {
   void cut() {}
 }
 
-class Viewport {
+class TimeViewport {
   var timeSpan = TimedSpan();
   double quarterHeight;
 
-  Viewport({
+  TimeViewport({
     this.timeSpan,
     this.quarterHeight,
   });

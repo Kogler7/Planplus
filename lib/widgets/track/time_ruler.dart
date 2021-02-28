@@ -12,8 +12,8 @@ class TimeRuler extends StatefulWidget {
   final ScrollController scrollController;
   final Stream timeStream = minutePeriodicStream;
 
-  double quarterHeight;
-  int interval; //minutes
+  final double quarterHeight;
+  final int interval; //minutes
 
   TimeRuler({
     Key key,
@@ -133,6 +133,8 @@ class _TimeRulerState extends State<TimeRuler> {
         fit: StackFit.expand,
         children: [
           ListView.builder(
+            ///此处回弹范围不足，时区的顶部和底部有选择盲区
+            physics: BouncingScrollPhysics(),
             controller: widget.scrollController,
             itemCount: _itemCount,
             itemBuilder: (ctx, index) {

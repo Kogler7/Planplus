@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/color.dart';
 import 'package:flutter_planplus/config/image.dart';
 
+///未实现的版本
 class GlassicGround extends StatelessWidget {
   final Widget child;
   final double blur;
@@ -19,9 +20,6 @@ class GlassicGround extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image(
-          fit: BoxFit.cover,
-        ),
         child,
       ],
     );
