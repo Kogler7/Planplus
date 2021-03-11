@@ -29,6 +29,7 @@ class _TrackViewState extends State<TrackView> {
   final _scrollStream = StreamController.broadcast(); //滑动通知
 
   double _quarterHeight;
+  double _totalHeight;
   int _scaleFactor = 4;
   var _frameSize = Size(360, 610);
 
@@ -47,11 +48,13 @@ class _TrackViewState extends State<TrackView> {
   void animateTo(double offset, Function() then) {
     _scrollController
         .animateTo(
-          offset,
-          duration: Duration(milliseconds: 700),
-          curve: Curves.decelerate,
-        )
-        .then((value) => then);
+      offset,
+      duration: Duration(milliseconds: 700),
+      curve: Curves.decelerate,
+    )
+        .then((value) {
+      then();
+    });
   }
 
   @override
@@ -72,6 +75,7 @@ class _TrackViewState extends State<TrackView> {
       double ratio = (scale - 6) / 5 + 1;
       _quarterHeight *= ratio;
     }
+    _totalHeight = _quarterHeight * 96;
     if (!init) setState(() {});
   }
 
@@ -95,12 +99,27 @@ class _TrackViewState extends State<TrackView> {
             quarterHeight: _quarterHeight,
             interval: IntervalList[_scaleFactor],
           ),
-          onNotification: (note) {
+          onNotification: (ScrollRequest note) {
             animateTo(note.target, note.onFinished);
             return false; //阻止继续向上冒泡
           },
         ),
-        ExecutionTrack(),
+        Positioned(
+          child: ExecutionTrack(
+            scrollStream: _scrollStream,
+            frameSzie: _frameSize,
+          ),
+          left: 200,
+        ),
+        ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            SizedBox(
+              height: _totalHeight,
+            )
+          ],
+          controller: _scrollController,
+        )
       ],
     );
   }
