@@ -112,10 +112,15 @@ class _TimeRulerState extends State<TimeRuler> {
 
   void viewCentralize() {
     _isOnBack = true;
-    ScrollRequest(target: getCentralizedOffset(), onFinished: () => _isOnBack = false).dispatch(context);
-    _showVicePointerController.sink.add(false);
-    _isViceVisible = false;
-    }
+    ScrollRequest(
+      target: getCentralizedOffset(),
+      onFinished: () {
+        _isOnBack = false;
+        _showVicePointerController.sink.add(false);
+        _isViceVisible = false;
+      },
+    ).dispatch(context);
+  }
 
   @override
   Widget build(BuildContext context) {

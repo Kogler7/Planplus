@@ -23,22 +23,43 @@ class PlanedTaskTrack extends StatefulWidget {
 class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
   final _scrollController = ScrollController();
 
+  void initState() {
+    super.initState();
+    widget.scrollStream.stream.listen((offset) {
+      _scrollController.jumpTo(offset);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   Widget abstractTaskTrackBuilder() {
-    return Stack();
+    return Stack(
+      children: [
+        Positioned(
+          top: 100,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: 500,
+            color: Colors.red.withOpacity(0.6),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget taskLayoutTrackBuilder() {
     return ListView.builder(
-      //controller: widget.scrollController,
-      itemCount: 5,
-      itemBuilder: (ctx, index) => TaskTile(),
-    );
-  }
-
-  Widget triggersTrackBuilder() {
-    return ListView.builder(
-      itemCount: 0,
-      itemBuilder: (ctx, index) => Container(),
+      controller: _scrollController,
+      itemCount: 35,
+      itemBuilder: (ctx, index) => Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: TaskTile(),
+      ),
     );
   }
 
@@ -49,7 +70,6 @@ class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
       children: [
         abstractTaskTrackBuilder(),
         taskLayoutTrackBuilder(),
-        triggersTrackBuilder(),
       ],
     );
   }
