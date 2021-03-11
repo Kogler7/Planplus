@@ -12,6 +12,9 @@ class TrackPage extends StatefulWidget {
 class _TrackPageState extends State<TrackPage> {
   @override
   Widget build(BuildContext context) {
-    return TrackView(startTiming: DateTime(2021, 2, 28));
+    return TrackView(
+      startTiming: DateTime(2021, 2, 28),
+      context: context,
+    );
   }
 }

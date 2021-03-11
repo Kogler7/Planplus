@@ -1,12 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/widgets/index.dart';
 
 class TrackView extends StatefulWidget {
-  TrackView({Key key, this.initScale = 4, @required this.startTiming}) : super(key: key);
+  TrackView({
+    Key key,
+    this.initScale = 4,
+    @required this.startTiming,
+    @required this.context,
+  }) : super(key: key);
 
   final DateTime startTiming;
   final int initScale;
+
+  final BuildContext context;
 
   @override
   _TrackViewState createState() => _TrackViewState();
@@ -16,20 +25,39 @@ class _TrackViewState extends State<TrackView> {
   ///存储推荐的间隔时间值，用于[TimeRuler]刻度控制
   static const IntervalList = <int>[5, 10, 15, 20, 30, 45, 60, 90, 120, 150, 180, 240];
 
-  final _scrollController = ScrollController();
+  final _scrollController = ScrollController(); //滑动控制器
+  final _scrollStream = StreamController.broadcast(); //滑动通知
 
   double _quarterHeight;
   int _scaleFactor = 4;
+  var _frameSize = Size(360, 610);
 
   @override
   void initState() {
     setScale(widget.initScale, init: true);
+    //将scrollStream与scrollController相关联,实时传递位置数据
+    _scrollController.addListener(() {
+      _scrollStream.sink.add(_scrollController.offset);
+    });
+    //延迟获取控件排布尺寸
+    Future.delayed(Duration(milliseconds: 200), () => _frameSize = widget.context.size);
     super.initState();
+  }
+
+  void animateTo(double offset, Function() then) {
+    _scrollController
+        .animateTo(
+          offset,
+          duration: Duration(milliseconds: 700),
+          curve: Curves.decelerate,
+        )
+        .then((value) => then);
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _scrollStream.close();
     super.dispose();
   }
 
@@ -55,16 +83,22 @@ class _TrackViewState extends State<TrackView> {
         Padding(
           padding: EdgeInsets.only(left: 80, right: 30),
           child: PlanedTaskTrack(
-            scrollController: _scrollController,
+            scrollStream: _scrollStream,
             quarterHeight: _quarterHeight,
             startTiming: widget.startTiming,
           ),
         ),
-        TimeRuler(
-          context: ctx,
-          scrollController: _scrollController,
-          quarterHeight: _quarterHeight,
-          interval: IntervalList[_scaleFactor],
+        NotificationListener(
+          child: TimeRuler(
+            frameSize: _frameSize,
+            scrollStream: _scrollStream,
+            quarterHeight: _quarterHeight,
+            interval: IntervalList[_scaleFactor],
+          ),
+          onNotification: (note) {
+            animateTo(note.target, note.onFinished);
+            return false; //阻止继续向上冒泡
+          },
         ),
         ExecutionTrack(),
       ],

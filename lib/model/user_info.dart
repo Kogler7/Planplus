@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserInfo{
+class UserInfo {
   final String name;
   final String email;
   final AssetImage avatar;

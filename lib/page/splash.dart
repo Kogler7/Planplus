@@ -3,16 +3,16 @@ import 'package:flutter_planplus/config/image.dart';
 import 'package:flutter_planplus/config/index.dart';
 import '../router/index.dart';
 
-class SplashPage extends StatefulWidget{
+class SplashPage extends StatefulWidget {
   @override
-  _SplashPageState createState()=>_SplashPageState();
+  _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage>{
+class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 1), (){
+    Future.delayed(Duration(seconds: 1), () {
       Applicat.goTo(context, Routes.home);
     });
   }
@@ -26,10 +26,10 @@ class _SplashPageState extends State<SplashPage>{
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              Image(image: KImage.splash_bk,fit: BoxFit.cover),
+              Image(image: KImage.splash_bk, fit: BoxFit.cover),
               Image(image: KImage.splash_ft),
               Align(
-                alignment: Alignment(-0.8,-0.8),
+                alignment: Alignment(-0.8, -0.8),
                 child: SizedBox(
                   height: 55.0,
                   width: 55.0,
@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage>{
                 ),
               ),
               Align(
-                alignment: Alignment(-0.7,0.97),
+                alignment: Alignment(-0.7, 0.97),
                 child: Text(
                   KString.Copyright_Statement,
                   style: TextStyle(

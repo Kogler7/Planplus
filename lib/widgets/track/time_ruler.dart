@@ -7,19 +7,19 @@ import 'package:flutter_planplus/global.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TimeRuler extends StatefulWidget {
-  final BuildContext context;
+  final Size frameSize;
 
-  final ScrollController scrollController;
   final Stream timeStream = minutePeriodicStream;
+  final StreamController scrollStream;
 
   final double quarterHeight;
   final int interval; //minutes
 
   TimeRuler({
     Key key,
-    @required this.context,
-    @required this.scrollController,
+    @required this.frameSize,
     @required this.quarterHeight,
+    @required this.scrollStream,
     this.interval = 15,
   }) : super(key: key);
 
@@ -28,13 +28,12 @@ class TimeRuler extends StatefulWidget {
 }
 
 class _TimeRulerState extends State<TimeRuler> {
-  final _pointerMoveController = StreamController();
-  final _showVicePointerController = StreamController<bool>();
+  final _pointerMoveController = StreamController(); //指针控制流
+  final _showVicePointerController = StreamController<bool>(); //副指针控制流
+  final _scrollController = ScrollController();
 
   int _nowTime = 0; //当前时刻的分钟总数
   double _nowTimeOffset = 0; //当前时刻的偏移（绝对）
-
-  var _frameSize = Size(360, 610);
 
   int _itemCount;
   double _itemHeight;
@@ -53,6 +52,10 @@ class _TimeRulerState extends State<TimeRuler> {
     _itemHeight = widget.quarterHeight / 15 * widget.interval;
     _tipPadding = _itemHeight - _tipHeight;
 
+    widget.scrollStream.stream.listen((offset) {
+      _scrollController.jumpTo(offset);
+    });
+
     widget.timeStream.listen((value) {
       //更新当前时间
       getNowTime();
@@ -61,7 +64,7 @@ class _TimeRulerState extends State<TimeRuler> {
       _pointerMoveController.sink.add(1);
     });
 
-    widget.scrollController.addListener(() {
+    _scrollController.addListener(() {
       //更新指针位置
       _pointerMoveController.sink.add(1);
       //决定是否显示vicePointer
@@ -72,11 +75,6 @@ class _TimeRulerState extends State<TimeRuler> {
     });
 
     getNowTime();
-    futureInit();
-  }
-
-  void futureInit() async {
-    _frameSize = await Future.delayed(Duration(milliseconds: 200), () => widget.context.size);
     viewCentralize();
   }
 
@@ -103,28 +101,21 @@ class _TimeRulerState extends State<TimeRuler> {
     return '$hour:$minute';
   }
 
-  double getCentralizedOffset() => _nowTimeOffset - _frameSize.height / 2;
+  double getCentralizedOffset() => _nowTimeOffset - widget.frameSize.height / 2;
 
-  double getPointerOffset() => _nowTimeOffset - widget.scrollController.offset;
+  double getPointerOffset() => _nowTimeOffset - _scrollController.offset;
 
   bool isPointerHidden() {
     double temp = getPointerOffset();
-    return temp < 0 || temp > _frameSize.height;
+    return temp < 0 || temp > widget.frameSize.height;
   }
 
   void viewCentralize() {
-    print(getCentralizedOffset());
     _isOnBack = true;
-    widget.scrollController
-        .animateTo(
-          getCentralizedOffset(),
-          duration: Duration(milliseconds: 700),
-          curve: Curves.decelerate,
-        )
-        .then((value) => _isOnBack = false);
+    ScrollRequest(target: getCentralizedOffset(), onFinished: () => _isOnBack = false).dispatch(context);
     _showVicePointerController.sink.add(false);
     _isViceVisible = false;
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +126,7 @@ class _TimeRulerState extends State<TimeRuler> {
           ListView.builder(
             ///此处回弹范围不足，时区的顶部和底部有选择盲区
             physics: BouncingScrollPhysics(),
-            controller: widget.scrollController,
+            controller: _scrollController,
             itemCount: _itemCount,
             itemBuilder: (ctx, index) {
               return Padding(
@@ -165,7 +156,7 @@ class _TimeRulerState extends State<TimeRuler> {
             initialData: false,
             builder: (ctx, snap) {
               return Positioned(
-                top: _frameSize.height / 2,
+                top: widget.frameSize.height / 2,
                 left: _pointerLeftPadding,
                 child: Pointer(
                   height: _tipHeight,
@@ -178,7 +169,7 @@ class _TimeRulerState extends State<TimeRuler> {
         ],
       ),
       onPointerUp: (e) {
-        if ((getPointerOffset() - _frameSize.height / 2).abs() < 50) viewCentralize();
+        if ((getPointerOffset() - widget.frameSize.height / 2).abs() < 50) viewCentralize();
       },
     );
   }
@@ -224,4 +215,11 @@ class Pointer extends StatelessWidget {
       ),
     );
   }
+}
+
+class ScrollRequest extends Notification {
+  final double target;
+  final Function() onFinished;
+
+  ScrollRequest({this.target, this.onFinished});
 }

@@ -15,7 +15,7 @@ class _JudgePageState extends State<JudgePage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: 0,
       itemBuilder: (ctx, index) {
         return GlassicContainer(
           padding: EdgeInsets.only(top: 100),
