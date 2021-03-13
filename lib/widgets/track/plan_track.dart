@@ -9,10 +9,12 @@ class PlanedTaskTrack extends StatefulWidget {
     @required this.scrollStream,
     @required this.startTiming,
     @required this.quarterHeight,
+    @required this.totalHeight,
   }) : super(key: key);
 
   final DateTime startTiming;
   final double quarterHeight;
+  final double totalHeight;
 
   final StreamController scrollStream;
 
@@ -37,19 +39,27 @@ class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
   }
 
   Widget abstractTaskTrackBuilder() {
-    return Stack(
-      children: [
-        Positioned(
-          top: 100,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 500,
-            color: Colors.red.withOpacity(0.6),
-          ),
-        ),
-      ],
-    );
+    return StreamBuilder(
+        stream: widget.scrollStream.stream,
+        initialData: 0.0,
+        builder: (ctx, snap) {
+          return Stack(
+            children: [
+              SizedBox(
+                height: widget.totalHeight,
+              ),
+              Positioned(
+                top: 100 - snap.data,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 500,
+                  color: Colors.red.withOpacity(0.6),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   Widget taskLayoutTrackBuilder() {
@@ -65,12 +75,14 @@ class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        abstractTaskTrackBuilder(),
-        taskLayoutTrackBuilder(),
-      ],
+    return IgnorePointer(
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          abstractTaskTrackBuilder(),
+          taskLayoutTrackBuilder(),
+        ],
+      ),
     );
   }
 }

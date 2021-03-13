@@ -178,6 +178,14 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 setState(() {
                   _glassicVisible = !_glassicVisible;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return TestPage();
+                      },
+                    ),
+                  );
                 });
               },
             ),

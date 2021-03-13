@@ -112,19 +112,21 @@ class _TimeRulerState extends State<TimeRuler> {
 
   void viewCentralize() {
     _isOnBack = true;
-    ScrollRequest(
-      target: getCentralizedOffset(),
-      onFinished: () {
-        _isOnBack = false;
-        _showVicePointerController.sink.add(false);
-        _isViceVisible = false;
-      },
-    ).dispatch(context);
+
+    ///加入事件循环，延后执行
+    Future(() => ScrollRequest(
+          target: getCentralizedOffset(),
+          onFinished: () {
+            _isOnBack = false;
+            _showVicePointerController.sink.add(false);
+            _isViceVisible = false;
+          },
+        ).dispatch(context));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
+    return IgnorePointer(
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -173,9 +175,6 @@ class _TimeRulerState extends State<TimeRuler> {
           ),
         ],
       ),
-      onPointerUp: (e) {
-        if ((getPointerOffset() - widget.frameSize.height / 2).abs() < 50) viewCentralize();
-      },
     );
   }
 }

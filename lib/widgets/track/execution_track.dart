@@ -20,23 +20,25 @@ class _ExecutionTrackState extends State<ExecutionTrack> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white54,
-      width: widget.frameSzie.width,
-      height: widget.frameSzie.height,
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: 30,
-        itemBuilder: (ctx, index) {
-          return Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Container(
-              width: 100,
-              height: 50,
-              color: Colors.blue,
-            ),
-          );
-        },
+    return IgnorePointer(
+      child: Container(
+        color: Colors.white54,
+        width: widget.frameSzie.width,
+        height: widget.frameSzie.height,
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: 30,
+          itemBuilder: (ctx, index) {
+            return Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Container(
+                width: 100,
+                height: 50,
+                color: Colors.blue,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

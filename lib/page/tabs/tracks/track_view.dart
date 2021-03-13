@@ -83,11 +83,21 @@ class _TrackViewState extends State<TrackView> {
   Widget build(BuildContext ctx) {
     return Stack(
       children: [
+        ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            SizedBox(
+              height: _totalHeight,
+            )
+          ],
+          controller: _scrollController,
+        ),
         ///此处排布算法可能会导致不同设备产生难以预料的结果
         Padding(
           padding: EdgeInsets.only(left: 80, right: 30),
           child: PlanedTaskTrack(
             scrollStream: _scrollStream,
+            totalHeight: _totalHeight,
             quarterHeight: _quarterHeight,
             startTiming: widget.startTiming,
           ),
@@ -111,15 +121,6 @@ class _TrackViewState extends State<TrackView> {
           ),
           left: 200,
         ),
-        ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            SizedBox(
-              height: _totalHeight,
-            )
-          ],
-          controller: _scrollController,
-        )
       ],
     );
   }
