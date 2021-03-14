@@ -68,7 +68,9 @@ class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
       itemCount: 35,
       itemBuilder: (ctx, index) => Padding(
         padding: EdgeInsets.only(top: 20),
-        child: TaskTile(),
+        child: TaskTile(
+          taskState: TaskState.failed,
+        ),
       ),
     );
   }

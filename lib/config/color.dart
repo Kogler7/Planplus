@@ -55,6 +55,13 @@ class KColor {
 ///text
   static const Color gotoItemTextColor = Colors.black54; //图标文本颜色
   static const Color gotoItemIconColor = Colors.grey; //图标箭头颜色
+//颜色列表
+  static const List<Color> taskTileHeadColors=[
+    Color(0xAAFFEE3B),
+    Color(0xAA03A9F4),
+    Color(0xAA4CAF50),
+    Color(0xAAF44336),
+  ];
 }
 
 class KRndColor {

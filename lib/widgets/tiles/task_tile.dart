@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/config/color.dart';
+
+enum TaskState {
+  waiting,
+  executing,
+  done,
+  failed,
+}
 
 class TaskTile extends StatefulWidget {
+  TaskState taskState;
+
+  TaskTile({this.taskState});
+
   @override
   _TaskTileState createState() => _TaskTileState();
 }
@@ -8,9 +20,11 @@ class TaskTile extends StatefulWidget {
 class _TaskTileState extends State<TaskTile> {
   double _height = 100;
   double _width = 300;
+  Color _headColor;
 
   @override
   Widget build(BuildContext context) {
+    _headColor = KColor.taskTileHeadColors[widget.taskState.index];
     return Container(
       height: _height,
       width: _width,
@@ -21,7 +35,7 @@ class _TaskTileState extends State<TaskTile> {
           children: [
             Container(
               width: 10,
-              color: Colors.greenAccent,
+              color: _headColor,
             ),
             Expanded(
               child: Container(
