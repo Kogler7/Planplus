@@ -15,25 +15,8 @@ class _TestPageState extends State<TestPage> {
       body: Center(
         child: Container(
           child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TimeSpanSelector(
-                  radius: 130,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    5,
-                    (index) => IconButton(
-                        icon: Icon(
-                          Icons.add,
-                          color: Colors.black54,
-                        ),
-                        onPressed: () {print(1);}),
-                  ),
-                ),
-              ],
+            child: TimeSpanSelector(
+              height: 260,
             ),
           ),
           decoration: BoxDecoration(

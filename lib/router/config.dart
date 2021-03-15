@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import './routes.dart';
 
-import 'package:flutter_planplus/widgets/expect.dart';
+import 'file:///C:/Users/Kolger/OneDrive/MyGit/Planplus/lib/widgets/basic/expect.dart';
 import 'package:flutter_planplus/page/index.dart';
 
 class FluroConfigor{

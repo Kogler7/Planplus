@@ -3,9 +3,9 @@ import 'package:flutter_planplus/config/color.dart';
 import 'dart:math';
 
 class TimeSpanSelector extends StatefulWidget {
-  final double radius;
+  final double height;
 
-  TimeSpanSelector({@required this.radius});
+  TimeSpanSelector({@required this.height});
 
   @override
   _TimeSpanSelectorState createState() => _TimeSpanSelectorState();
@@ -16,7 +16,8 @@ class _TimeSpanSelectorState extends State<TimeSpanSelector> {
   Offset _lastPos;
 
   CenterCoord _centerCoord = CenterCoord(0, 0);
-  Rect _rect;
+  Rect _outerRect;
+  double _outerRadius;
   double _innerRadius;
 
   double _startAngle = 0;
@@ -26,143 +27,170 @@ class _TimeSpanSelectorState extends State<TimeSpanSelector> {
 
   @override
   void initState() {
-    _centerOffset = Offset(widget.radius, widget.radius);
-    _rect = Rect.fromCircle(center: Offset(widget.radius, widget.radius), radius: widget.radius / 6 * 5 - 5);
+    _outerRadius = widget.height / 2 - 10;
+    _innerRadius = _outerRadius / 5 * 3;
+    _centerOffset = Offset(widget.height / 2 - 10, widget.height / 2 - 10);
+    _outerRect = Rect.fromCircle(center: _centerOffset, radius: _outerRadius / 6 * 5 - 5);
     CenterCoord.centerOffset = _centerOffset;
-    _innerRadius = widget.radius / 5 * 3;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      child: Container(
-        width: widget.radius * 2,
-        height: widget.radius * 2,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.grey.shade300,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 1,
-              color: Colors.black54,
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Center(
-              child: Container(
-                width: _innerRadius * 2,
-                height: _innerRadius * 2,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    spreadRadius: 2,
-                    color: Colors.grey[400],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: SizedBox(
+            height: widget.height - 20,
+            child: Row(
+              children: [
+                Listener(
+                  child: Container(
+                    width: _outerRadius * 2,
+                    height: _outerRadius * 2,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey.shade300,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 2,
+                          spreadRadius: 1,
+                          color: Colors.black54,
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Container(
+                            width: _innerRadius * 2,
+                            height: _innerRadius * 2,
+                            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
+                              BoxShadow(
+                                blurRadius: 2,
+                                spreadRadius: 2,
+                                color: Colors.grey[400],
+                              ),
+                            ]),
+                            child: DefaultTextStyle(
+                              style: TextStyle(color: Colors.black54),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment(0, -0.85),
+                                    child: Text('00:00'),
+                                  ),
+                                  Align(
+                                    alignment: Alignment(0.8, 0),
+                                    child: Text('03:00'),
+                                  ),
+                                  Align(
+                                    alignment: Alignment(-0.8, 0),
+                                    child: Text('09:00'),
+                                  ),
+                                  Align(
+                                    alignment: Alignment(0, 0.85),
+                                    child: Text('06:00'),
+                                  ),
+                                  CustomPaint(
+                                    size: Size(_innerRadius * 2, _innerRadius * 2),
+                                    painter: DialPainter(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        CustomPaint(
+                          size: Size(_outerRadius * 2, _outerRadius * 2),
+                          painter: SpanPainter(
+                            rect: _outerRect,
+                            startAngle: _startAngle,
+                            endingAngle: _endingAngle,
+                            strokeWidth: _outerRadius / 3 - 3,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ]),
-                child: DefaultTextStyle(
-                  style: TextStyle(color: Colors.black54),
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment(0, -0.85),
-                        child: Text('00:00'),
-                      ),
-                      Align(
-                        alignment: Alignment(0.8, 0),
-                        child: Text('03:00'),
-                      ),
-                      Align(
-                        alignment: Alignment(-0.8, 0),
-                        child: Text('09:00'),
-                      ),
-                      Align(
-                        alignment: Alignment(0, 0.85),
-                        child: Text('06:00'),
-                      ),
-                      CustomPaint(
-                        size: Size(_innerRadius * 2, _innerRadius * 2),
-                        painter: DialPainter(),
-                      ),
-                    ],
+                  onPointerDown: (e) {
+                    ///命中测试（低效算法）
+                    RenderBox box = context.findRenderObject();
+                    var pos = box.globalToLocal(e.position);
+                    _lastPos = pos;
+                    var hitPolar = PolarCoord.from(CenterCoord.of(pos));
+                    var distance = hitPolar.distance;
+                    if (distance >= _outerRadius / 5 * 3 && distance <= _outerRadius) {
+                      var angle = hitPolar.direction;
+                      var alpha = pi / 12;
+                      var hitList = <double>[
+                        _startAngle - alpha,
+                        _startAngle + alpha,
+                        _endingAngle - alpha,
+                        _endingAngle + alpha,
+                      ];
+                      if (angle >= hitList[0]) {
+                        if (angle <= hitList[1])
+                          _hitState = HitState.head;
+                        else if (angle <= hitList[2])
+                          _hitState = HitState.body;
+                        else if (angle <= hitList[3])
+                          _hitState = HitState.tail;
+                        else
+                          _hitState = HitState.none;
+                      }
+                      print('${_hitState.toString()}::'
+                          '${hitPolar.direction.toStringAsFixed(3)} '
+                          '(${hitList[0].toStringAsFixed(3)},${hitList[3].toStringAsFixed(3)}); '
+                          'Sweep:${(hitList[3] - hitList[0]).toStringAsFixed(3)}; '
+                          'distance:${hitPolar.distance.toStringAsFixed(3)}');
+                    }
+                  },
+                  onPointerMove: (e) {
+                    ///移动（低效算法）
+                    RenderBox box = context.findRenderObject();
+                    var pos = box.globalToLocal(e.position);
+                    print('{${_startAngle.toStringAsFixed(3)},${_endingAngle.toStringAsFixed(3)}}');
+                    switch (_hitState) {
+                      case HitState.none:
+                        break;
+                      case HitState.head:
+                        int rounds = (_startAngle % pi).toInt();
+                        _startAngle = PolarCoord.from(CenterCoord.of(pos)).direction + rounds * pi;
+                        break;
+                      case HitState.body:
+                        if (e.delta.dx != 0 && e.delta.dy != 0) {
+                          double delta = PolarCoord.from(CenterCoord.of(pos)).direction - PolarCoord.from(CenterCoord.of(_lastPos)).direction;
+                          _startAngle += delta;
+                          _endingAngle += delta;
+                        }
+                        break;
+                      case HitState.tail:
+                        int rounds = (_startAngle % pi).toInt();
+                        _endingAngle = PolarCoord.from(CenterCoord.of(pos)).direction + rounds * pi;
+                        break;
+                    }
+                    _lastPos = pos;
+                    setState(() {});
+                  },
+                ),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      color: Colors.red,
+                      width: 20,
+                      height: 200,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-            CustomPaint(
-              size: Size(widget.radius * 2, widget.radius * 2),
-              painter: SpanPainter(
-                rect: _rect,
-                startAngle: _startAngle,
-                endingAngle: _endingAngle,
-                strokeWidth: widget.radius / 3 - 3,
-              ),
-            )
-          ],
+          ),
         ),
       ),
-      onPointerDown: (e) {
-        ///命中测试（低效算法）
-        RenderBox box = context.findRenderObject();
-        var pos = box.globalToLocal(e.position);
-        _lastPos = pos;
-        var hitPolar = PolarCoord.from(CenterCoord.of(pos));
-        var distance = hitPolar.distance;
-        if (distance >= widget.radius / 5 * 3 && distance <= widget.radius) {
-          var angle = hitPolar.direction;
-          var alpha = pi / 12;
-          var hitList = <double>[
-            _startAngle - alpha,
-            _startAngle + alpha,
-            _endingAngle - alpha,
-            _endingAngle + alpha,
-          ];
-          if (angle >= hitList[0]) {
-            if (angle <= hitList[1])
-              _hitState = HitState.head;
-            else if (angle <= hitList[2])
-              _hitState = HitState.body;
-            else if (angle <= hitList[3])
-              _hitState = HitState.tail;
-            else
-              _hitState = HitState.none;
-          }
-          print('${_hitState.toString()}::'
-              '${hitPolar.direction.toStringAsFixed(3)} '
-              '(${hitList[0].toStringAsFixed(3)},${hitList[3].toStringAsFixed(3)}); '
-              'distance:${hitPolar.distance.toStringAsFixed(3)}');
-        }
-      },
-      onPointerMove: (e) {
-        ///移动（低效算法）
-        RenderBox box = context.findRenderObject();
-        var pos = box.globalToLocal(e.position);
-        print('{${_startAngle.toStringAsFixed(3)},${_endingAngle.toStringAsFixed(3)}}');
-        switch (_hitState) {
-          case HitState.none:
-            break;
-          case HitState.head:
-            int rounds = (_startAngle % pi).toInt();
-            _startAngle = PolarCoord.from(CenterCoord.of(pos)).direction + rounds * pi;
-            break;
-          case HitState.body:
-            if (e.delta.dx != 0 && e.delta.dy != 0) {
-              double delta = PolarCoord.from(CenterCoord.of(pos)).direction - PolarCoord.from(CenterCoord.of(_lastPos)).direction;
-              _startAngle += delta;
-              _endingAngle += delta;
-            }
-            break;
-          case HitState.tail:
-            int rounds = (_startAngle % pi).toInt();
-            _endingAngle = PolarCoord.from(CenterCoord.of(pos)).direction + rounds * pi;
-            break;
-        }
-        _lastPos = pos;
-        setState(() {});
-      },
     );
   }
 }
@@ -248,7 +276,13 @@ class PolarCoord {
   PolarCoord.from(CenterCoord coord) {
     var temp = Offset(coord.x, coord.y);
     distance = temp.distance;
-    direction = temp.direction - angleDiff;
+    var dirc = temp.direction;
+    //角度坐标转换（转折点精度有待提高）
+    if (dirc < 0) dirc += 2 * pi;
+    if (dirc >= 1.5 * pi)
+      direction = dirc - 1.5 * pi;
+    else
+      direction = dirc - angleDiff;
   }
 
   double get angle => direction + angleDiff;

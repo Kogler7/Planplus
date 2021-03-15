@@ -1,6 +1,7 @@
 //Planplus主页
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/page/subs/newer/new_task.dart';
 import '../global.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/index.dart';
@@ -182,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return TestPage();
+                        return NewTaskPage();
                       },
                     ),
                   );

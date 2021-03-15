@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/Kolger/OneDrive/MyGit/Planplus/lib/widgets/expect.dart';
+import 'package:flutter_planplus/widgets/basic/expect.dart';
 
 class AboutUs extends StatelessWidget{
 

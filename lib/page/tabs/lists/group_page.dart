@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/color.dart';
 import 'package:flutter_planplus/index.dart';
-import 'package:flutter_planplus/widgets/glassic_box.dart';
+import 'package:flutter_planplus/widgets/basic/glassic_box.dart';
 import 'package:flutter_planplus/widgets/index.dart';
 import 'package:flutter_planplus/model/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
