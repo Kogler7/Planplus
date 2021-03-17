@@ -13,7 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 1), () {
-      Applicat.goTo(context, Routes.home);
+      Applicat.goTo(context, Routes.login);
     });
   }
 

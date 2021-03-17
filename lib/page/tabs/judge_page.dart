@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/page/index.dart';
-import 'file:///C:/Users/Kolger/OneDrive/MyGit/Planplus/lib/widgets/basic/glassic_box.dart';
+import 'package:flutter_planplus/widgets/basic/glassic_box.dart';
 
 class JudgePage extends StatefulWidget {
   JudgePage({Key key}) : super(key: key);
