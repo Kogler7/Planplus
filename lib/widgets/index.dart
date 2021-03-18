@@ -1,6 +1,6 @@
 export 'basic/expect.dart';
 export 'micro_tabbar.dart';
-export 'basic/glassic_box.dart';
+export 'decoration/glassics.dart';
 
 export 'tiles/fixed_item.dart';
 export 'tiles/drag_item.dart';

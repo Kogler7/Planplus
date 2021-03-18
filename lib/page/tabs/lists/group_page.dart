@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/config/color.dart';
 import 'package:flutter_planplus/index.dart';
-import 'package:flutter_planplus/widgets/basic/glassic_box.dart';
+import 'package:flutter_planplus/widgets/decoration/glassics.dart';
 import 'package:flutter_planplus/widgets/index.dart';
 import 'package:flutter_planplus/model/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -126,90 +126,88 @@ class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMix
         ),
         actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: () {})],
       ),
-      body: GlassicGround(
-        child: Listener(
-          child: Stack(
-            children: [
-              Scrollbar(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: EdgeInsets.only(top: 10.0, bottom: 60.0),
-                  physics: BouncingScrollPhysics(),
-                  itemCount: _list?.length ?? 0,
-                  itemBuilder: (ctx, index) {
-                    bool _matched = index == _matchedIndex;
-                    bool _chosed = index == _chosedIndex;
-                    return AnimatedPadding(
-                      padding: EdgeInsets.only(top: _matched ? 145.0.w : 0),
-                      duration: Duration(milliseconds: _duration),
-                      curve: Curves.decelerate,
-                      child: DraggableItem(
-                        title: _list[index].title,
-                        subTitle: _list[index].subTitle,
-                        sizeFactor: _chosed ? 0 : 1.0,
-                        onPressed: () {
+      body: Listener(
+        child: Stack(
+          children: [
+            Scrollbar(
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.only(top: 10.0, bottom: 60.0),
+                physics: BouncingScrollPhysics(),
+                itemCount: _list?.length ?? 0,
+                itemBuilder: (ctx, index) {
+                  bool _matched = index == _matchedIndex;
+                  bool _chosed = index == _chosedIndex;
+                  return AnimatedPadding(
+                    padding: EdgeInsets.only(top: _matched ? 145.0.w : 0),
+                    duration: Duration(milliseconds: _duration),
+                    curve: Curves.decelerate,
+                    child: DraggableItem(
+                      title: _list[index].title,
+                      subTitle: _list[index].subTitle,
+                      sizeFactor: _chosed ? 0 : 1.0,
+                      onPressed: () {
+                        _duration = 0;
+                      },
+                      onLongPressed: () {
+                        setState(() {
+                          _chosedIndex = index;
+                          _matchedIndex = index + 1;
+                          _chosedOffset = indexOffset(_chosedIndex);
                           _duration = 0;
-                        },
-                        onLongPressed: () {
-                          setState(() {
-                            _chosedIndex = index;
-                            _matchedIndex = index + 1;
-                            _chosedOffset = indexOffset(_chosedIndex);
-                            _duration = 0;
-                            _onMove = true;
-                          });
-                        },
-                      ),
-                    );
-                  },
-                ),
+                          _onMove = true;
+                        });
+                      },
+                    ),
+                  );
+                },
               ),
-              Positioned(
-                top: _actorAlive ? _chosedOffset : 0,
-                child: DraggableItem(
-                  sizeFactor: _actorAlive ? 1.0 : 0,
-                  title: _actorAlive ? _list[_chosedIndex].title : 'Test',
-                  subTitle: _actorAlive ? _list[_chosedIndex].subTitle : '',
-                  leadingIndex: 1,
-                  locked: true,
-                  shadowed: true,
-                ),
+            ),
+            Positioned(
+              top: _actorAlive ? _chosedOffset : 0,
+              child: DraggableItem(
+                sizeFactor: _actorAlive ? 1.0 : 0,
+                title: _actorAlive ? _list[_chosedIndex].title : 'Test',
+                subTitle: _actorAlive ? _list[_chosedIndex].subTitle : '',
+                leadingIndex: 1,
+                locked: true,
+                shadowed: true,
               ),
-            ],
-          ),
-          onPointerMove: (e) {
-            if (_onMove) {
-              setState(() {
-                _duration = 200;
-                _chosedOffset += e.delta.dy;
-                //辅助滑动
-                if (_chosedOffset <= 150.h && _tempIndex > 0)
-                  goAlong(-300.w);
-                else if (_chosedOffset >= 1000.h && _tempIndex < _list.length - 1) goAlong(300.w);
-                //判断匹配
-                for (int i = 0; i <= _list.length; i++)
-                  if (i != _chosedIndex && (_chosedOffset - indexOffset(i > _chosedIndex ? i - 1 : i)).abs() <= 20) {
-                    if (_onScroll) {
-                      _tempIndex = i;
-                      _matchedIndex = -1;
-                    } else
-                      _tempIndex = _matchedIndex = i;
-                  }
-              });
-            }
-          },
-          onPointerUp: (e) {
-            if (_onMove) {
-              _duration = 0;
-              _tempOffset = _chosedOffset;
-              if (_onScroll) _matchedIndex = _tempIndex; //就近找地方安置
-              _transController.reset(); //保证控制器顺利启动
-              _transController.forward();
-              _onMove = false;
-              _onBack = true; //回弹
-            }
-          },
+            ),
+          ],
         ),
+        onPointerMove: (e) {
+          if (_onMove) {
+            setState(() {
+              _duration = 200;
+              _chosedOffset += e.delta.dy;
+              //辅助滑动
+              if (_chosedOffset <= 150.h && _tempIndex > 0)
+                goAlong(-300.w);
+              else if (_chosedOffset >= 1000.h && _tempIndex < _list.length - 1) goAlong(300.w);
+              //判断匹配
+              for (int i = 0; i <= _list.length; i++)
+                if (i != _chosedIndex && (_chosedOffset - indexOffset(i > _chosedIndex ? i - 1 : i)).abs() <= 20) {
+                  if (_onScroll) {
+                    _tempIndex = i;
+                    _matchedIndex = -1;
+                  } else
+                    _tempIndex = _matchedIndex = i;
+                }
+            });
+          }
+        },
+        onPointerUp: (e) {
+          if (_onMove) {
+            _duration = 0;
+            _tempOffset = _chosedOffset;
+            if (_onScroll) _matchedIndex = _tempIndex; //就近找地方安置
+            _transController.reset(); //保证控制器顺利启动
+            _transController.forward();
+            _onMove = false;
+            _onBack = true; //回弹
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
