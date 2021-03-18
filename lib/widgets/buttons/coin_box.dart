@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CoinBoxButton extends StatelessWidget {
+  //按钮高度
+  final double height;
+
   //按钮上的文字
   final String label;
 
@@ -14,6 +17,7 @@ class CoinBoxButton extends StatelessWidget {
     Key key,
     @required this.label,
     this.bordered = false,
+    this.height = 50,
     this.onTap,
   }) : super(key: key);
 
@@ -25,19 +29,15 @@ class CoinBoxButton extends StatelessWidget {
         //边框
         decoration: BoxDecoration(
           //定义填充颜色
-          color: bordered ? Colors.white : Theme
-              .of(context)
-              .accentColor,
+          color: bordered ? Colors.white : Theme.of(context).accentColor,
           //点击事件高亮的边框圆角
           borderRadius: BorderRadius.circular(10),
           //边框设置
           border: bordered
               ? Border.all(
-            color: Theme
-                .of(context)
-                .accentColor,
-            width: 1.0,
-          )
+                  color: Theme.of(context).accentColor,
+                  width: 1.0,
+                )
               : Border.fromBorderSide(BorderSide.none),
         ),
         //事件监听回调
@@ -54,7 +54,7 @@ class CoinBoxButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       //按钮样式
       child: Container(
-        height: 45.0,
+        height: height,
         child: Center(
           child: Text(
             //文本内容
@@ -62,9 +62,7 @@ class CoinBoxButton extends StatelessWidget {
             //文本样式
             style: TextStyle(
               //文本颜色
-              color: bordered ? Theme
-                  .of(context)
-                  .accentColor : Colors.white,
+              color: bordered ? Theme.of(context).accentColor : Colors.white,
               //加粗
               fontWeight: FontWeight.w600,
               //文字大小

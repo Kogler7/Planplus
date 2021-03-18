@@ -8,16 +8,16 @@ class FloatingBubblesLayer extends StatefulWidget {
   final int bubbleNum;
   final double maxRadius;
   final double maxSpeed;
-  final double maxTheta;
   final int internal;
+  Size initField = Size(400, 700);
 
   FloatingBubblesLayer({
     Key key,
     this.bubbleNum = 20,
     this.maxRadius = 100,
     this.maxSpeed = 0.7,
-    this.maxTheta = 2 * pi,
     this.internal = 16,
+    this.initField,
   });
 
   @override
@@ -27,6 +27,7 @@ class FloatingBubblesLayer extends StatefulWidget {
 class _FloatingBubblesLayerState extends State<FloatingBubblesLayer> {
   //气泡集合
   List<BubbleBean> _list = [];
+  Size _initField;
 
   //随机数
   Random _random = Random(DateTime.now().microsecondsSinceEpoch);
@@ -37,19 +38,19 @@ class _FloatingBubblesLayerState extends State<FloatingBubblesLayer> {
   @override
   void initState() {
     super.initState();
-
+    _initField = widget.initField ?? Size(400, 700);
     _repaintStream = Stream.periodic(Duration(milliseconds: widget.internal), (int) => 1);
 
     for (var i = 0; i < widget.bubbleNum; i++) {
       BubbleBean particle = new BubbleBean()
         //获取随机透明度的白色颜色
         ..color = Color.fromARGB(_random.nextInt(190) + 10, 255, 255, 255)
-        //指定一个位置 每次绘制时还会修改
-        ..postion = Offset(-1, -1)
+        //随机指定一个位置
+        ..postion = Offset(_random.nextDouble() * _initField.width, _random.nextDouble() * _initField.height)
         //气泡运动速度
         ..speed = _random.nextDouble() * widget.maxSpeed
         //随机角度
-        ..theta = _random.nextDouble() * widget.maxTheta
+        ..theta = _random.nextDouble() * 2 * pi
         //随机半径
         ..radius = _random.nextDouble() * widget.maxRadius;
       //集合保存
@@ -100,12 +101,21 @@ class BubblePainter extends CustomPainter {
       var dx = element.postion.dx + velocity.dx;
       var dy = element.postion.dy + velocity.dy;
       //x轴边界计算
-      if (element.postion.dx < 0 || element.postion.dx > size.width) {
-        dx = random.nextDouble() * size.width;
+      if (element.postion.dx + element.radius < 0) {
+        dx = size.width + element.radius;
+        element.theta = random.nextDouble() * 2 * pi;
       }
-      //y轴边界计算
-      if (element.postion.dy < 0 || element.postion.dy > size.height) {
-        dy = random.nextDouble() * size.height;
+      if (element.postion.dx - element.radius > size.width) {
+        dx = -element.radius;
+        element.theta = random.nextDouble() * 2 * pi;
+      }
+      if (element.postion.dy + element.radius < 0) {
+        dy = size.height + element.radius;
+        element.theta = random.nextDouble() * 2 * pi;
+      }
+      if (element.postion.dy - element.radius > size.height) {
+        dy = -element.radius;
+        element.theta = random.nextDouble() * 2 * pi;
       }
       //新的位置
       element.postion = Offset(dx, dy);

@@ -11,31 +11,10 @@ import 'package:flutter_planplus/widgets/decoration/theme.dart';
 
 /// 气泡背景的登录页面
 
-final tag = UniqueKey();
-
-class SharedBackLayer extends StatelessWidget {
-  final tag;
-
-  SharedBackLayer({Key key, @required this.tag}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: tag,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: MainBackImage(),
-          ),
-          FloatingBubblesLayer(),
-          GlassicLayer(
-            blur: 0.3,
-            opacity: 0.2,
-          ),
-        ],
-      ),
-    );
-  }
+enum ActionState {
+  navigate,
+  login,
+  register,
 }
 
 class LoginPage extends StatefulWidget {
@@ -45,12 +24,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   double _opacity = 0;
-  SharedBackLayer _backLayer;
+  ActionState _actionState = ActionState.navigate;
+  int _actionTime = 400;
 
   @override
   void initState() {
     Future(() => setState(() => _opacity = 1));
-    _backLayer = SharedBackLayer(tag: tag);
     super.initState();
   }
 
@@ -61,26 +40,77 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           //气泡背景
-          _backLayer,
-          //展示信息
-          buildInforLayer(),
-          //按钮
-          AnimatedOpacity(
-            opacity: _opacity,
-            duration: Duration(milliseconds: 1000),
-            child: buildColumn(context),
-          )
+          BubbleBackGround(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: _actionState != ActionState.navigate ? Colors.black54 : Colors.transparent,
+                onPressed: () {
+                  setState(() {
+                    _actionState = ActionState.navigate;
+                  });
+                },
+              ),
+            ),
+            body: Stack(
+              fit: StackFit.expand,
+              children: [
+                //展示信息
+                buildInforLayer(),
+                //按钮
+                AnimatedPositioned(
+                  left: 26,
+                  right: 26,
+                  top: _actionState == ActionState.navigate ? 400 : 100,
+                  child: AnimatedOpacity(
+                    opacity: _opacity,
+                    duration: Duration(milliseconds: _actionTime),
+                    child: buildActionsColumn(context),
+                  ),
+                  curve: Curves.easeInOut,
+                  duration: Duration(milliseconds: _actionTime),
+                ),
+              ],
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: _actionState == ActionState.navigate
+                ? FloatingActionButton.extended(
+                    onPressed: () {
+                      Applicat.goTo(context, Routes.home);
+                    },
+                    icon: Icon(Icons.arrow_forward_outlined),
+                    label: Text('直接进入'),
+                  )
+                : FloatingActionButton(
+                    child: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      setState(() {
+                        _actionState = ActionState.navigate;
+                      });
+                    }),
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.transparent,
+              elevation: 0,
+              child: SizedBox(height: 90),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Positioned buildInforLayer() {
+  Widget buildInforLayer() {
     //顶部对齐
-    return Positioned(
-      top: 110,
+    return AnimatedPositioned(
+      top: _actionState == ActionState.navigate ? 100 : 10,
       left: 0,
       right: 0,
+      duration: Duration(milliseconds: _actionTime),
+      curve: Curves.decelerate,
       child: Text(
         'Planplus',
         textAlign: TextAlign.center,
@@ -93,116 +123,119 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildColumn(BuildContext context) {
+  Widget buildActionsColumn(BuildContext context) {
+    double _itemHeight = 50;
     return Container(
-      padding: EdgeInsets.all(36),
       child: Column(
-        //子Widget 底部对齐
-        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          SizedBox(
-            height: 50,
-            child: LoginBoxBlank(
-              hintText: '邮箱',
-              obscureText: false,
-              prefixIconData: Icons.mail_outline,
-              onChanged: (value) {},
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          SizedBox(
-            height: 50,
-            child: LoginBoxBlank(
-              hintText: '密码',
-              obscureText: true,
-              prefixIconData: Icons.lock_outline,
-              suffixIconData: Icons.visibility,
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
+          _actionState != ActionState.navigate
+              ? LoginBoxBlank(
+                  hintText: '邮箱',
+                  obscureText: false,
+                  prefixIconData: Icons.mail_outline,
+                  onChanged: (value) {},
+                  height: _itemHeight,
+                )
+              : SizedBox(height: 0),
+          _actionState != ActionState.navigate
+              ? Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: LoginBoxBlank(
+                    hintText: '密码',
+                    obscureText: true,
+                    prefixIconData: Icons.lock_outline,
+                    suffixIconData: Icons.visibility,
+                    height: _itemHeight,
+                  ),
+                )
+              : SizedBox(height: 0),
+          _actionState == ActionState.register
+              ? Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: LoginBoxBlank(
+                    hintText: '确认密码',
+                    obscureText: true,
+                    prefixIconData: Icons.lock_outline,
+                    suffixIconData: Icons.visibility,
+                    height: _itemHeight,
+                  ),
+                )
+              : SizedBox(height: 0),
+          SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                '忘记密码?',
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontSize: 12,
+              Opacity(
+                opacity: _actionState == ActionState.login ? 1 : 0,
+                child: Text(
+                  '忘记密码?',
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 20.0,
-          ),
-          CoinBoxButton(
-            label: '登录',
-            onTap: () {
-              Applicat.goTo(context, Routes.home);
-            },
-            bordered: false,
-          ),
+          _actionState != ActionState.register
+              ? Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: CoinBoxButton(
+                    label: '登录',
+                    onTap: () {
+                      if (_actionState == ActionState.navigate) {
+                        setState(() {
+                          _actionState = ActionState.login;
+                        });
+                      } else
+                        Applicat.goTo(context, Routes.home);
+                    },
+                    bordered: false,
+                    height: _itemHeight,
+                  ),
+                )
+              : SizedBox(height: 0),
           SizedBox(
             height: 10.0,
           ),
-          CoinBoxButton(
-            label: '注册',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (ctx) {
-                  return Stack(
-                    children: [
-                      _backLayer,
-                      LoginSubPage(),
-                    ],
-                  );
-                }),
-              );
-            },
-            bordered: true,
-          ),
+          _actionState != ActionState.login
+              ? Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: CoinBoxButton(
+                    label: '注册',
+                    onTap: () {
+                      if (_actionState == ActionState.navigate) {
+                        setState(() {
+                          _actionState = ActionState.register;
+                        });
+                      } else
+                        Applicat.goTo(context, Routes.home);
+                    },
+                    bordered: true,
+                    height: _itemHeight,
+                  ),
+                )
+              : SizedBox(height: 0),
         ],
       ),
     );
   }
 }
 
-class LoginSubPage extends StatefulWidget {
-  @override
-  _LoginSubPageState createState() => _LoginSubPageState();
-}
-
-class _LoginSubPageState extends State<LoginSubPage> {
+class BubbleBackGround extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black54,
-          onPressed: () => Navigator.pop(context),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: MainBackImage(),
         ),
-      ),
+        FloatingBubblesLayer(),
+        GlassicLayer(
+          blur: 0.3,
+          opacity: 0.2,
+        ),
+      ],
     );
-  }
-}
-
-class RegisterSubPage extends StatefulWidget {
-  @override
-  _RegisterSubPageState createState() => _RegisterSubPageState();
-}
-
-class _RegisterSubPageState extends State<RegisterSubPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
