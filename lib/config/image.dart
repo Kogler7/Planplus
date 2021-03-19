@@ -1,5 +1,6 @@
 //图片常量
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/config/index.dart';
 
 class KImage {
   static const AssetImage avatar = AssetImage('assets/images/avatar.jpeg');
@@ -10,5 +11,5 @@ class KImage {
   static const AssetImage logo_w = AssetImage('assets/images/logo_w.png');
   static const AssetImage splash_bk = AssetImage('assets/images/splash_bk.jpg');
   static const AssetImage splash_ft = AssetImage('assets/images/splash_ft.png');
-  static AssetImage mainBack(int index) => AssetImage('assets/images/main_back/main_back$index.png');
+  static AssetImage mainBack(int index) => AssetImage('assets/images/main_back/$index ${KString.Themes[index]}.png');
 }

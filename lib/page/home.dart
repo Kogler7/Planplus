@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/page/subs/newer/new_task.dart';
+import 'package:flutter_planplus/widgets/decoration/theme.dart';
 import '../global.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/index.dart';
@@ -58,9 +59,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  int _themeIndex = 0;
-
-  bool _glassicVisible = false;
 
   //根据选择改变剩余按钮
   List<Widget> getButtons(int index) {
@@ -114,40 +112,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() {
-    themeIndexStream.stream.listen((index) {
-      setState(() {
-        _themeIndex = index;
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image(
-            image: KImage.mainBack(_themeIndex),
-            fit: BoxFit.cover,
-          ),
-
-          ///效率有待优化
-          Visibility(
-            visible: _glassicVisible,
-            child: GlassicContainer(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              borderRadius: 0,
-              linearGradient: LinearGradient(colors: [Colors.white54, Colors.white54]),
-              border: 0,
-              blur: 3,
-              borderGradient: LinearGradient(colors: [Colors.white54, Colors.white54]),
-            ),
-          ),
+          ThemedBackImage(),
+          ThemedGlassicLayer(),
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -178,7 +150,6 @@ class _HomePageState extends State<HomePage> {
               ),
               onPressed: () {
                 setState(() {
-                  _glassicVisible = !_glassicVisible;
                   Navigator.push(
                     context,
                     MaterialPageRoute(

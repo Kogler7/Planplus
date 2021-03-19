@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/index.dart';
+import 'package:flutter_planplus/widgets/tiles/theme_unit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_planplus/config/string.dart';
 import '../global.dart';
@@ -12,19 +13,38 @@ Future<void> showThemeDialog(BuildContext ctx) async {
         height: 800.h,
         child: Column(
           children: [
-            ListTile(title: Text('选择一种背景主题')),
-            SizedBox(
-              height: 700.h,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return ListTile(
-                    title: Text(KString.Themes[index]),
-                    onTap: () {
-                      themeIndexStream.sink.add(index);
-                    },
-                  );
-                },
+            Container(
+              height: 40,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  '选择一种背景主题',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              ),
+              width: double.infinity,
+            ),
+            Container(
+              height: 720.h,
+              child: Padding(
+                padding: EdgeInsets.only(left: 5),
+                child: ListView(
+                  children: [
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 16,
+                      children: List.generate(
+                        10,
+                        (index) => ThemeDisplayUnit(
+                          index: index,
+                          width: 130,
+                          height: 170,
+                          padding: 1,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],

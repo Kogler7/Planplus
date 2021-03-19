@@ -228,9 +228,11 @@ class BubbleBackGround extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: MainBackImage(),
+          child: ThemedBackImage(),
         ),
-        FloatingBubblesLayer(),
+        FloatingBubblesLayer(
+          initField: Size(400,700),
+        ),
         GlassicLayer(
           blur: 0.3,
           opacity: 0.2,

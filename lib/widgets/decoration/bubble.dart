@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
 
-Offset calculateXY(double speed, double theta) => Offset(speed * cos(theta), speed * sin(theta));
-
 class FloatingBubblesLayer extends StatefulWidget {
   final int bubbleNum;
   final double maxRadius;
   final double maxSpeed;
   final int internal;
-  Size initField = Size(400, 700);
+  final Size initField;
 
   FloatingBubblesLayer({
     Key key,
     this.bubbleNum = 20,
     this.maxRadius = 100,
-    this.maxSpeed = 0.7,
+    this.maxSpeed = 1.0,
     this.internal = 16,
     this.initField,
   });
@@ -43,16 +41,16 @@ class _FloatingBubblesLayerState extends State<FloatingBubblesLayer> {
 
     for (var i = 0; i < widget.bubbleNum; i++) {
       BubbleBean particle = new BubbleBean()
-        //获取随机透明度的白色颜色
+        //获取透明度随机的白色
         ..color = Color.fromARGB(_random.nextInt(190) + 10, 255, 255, 255)
         //随机指定一个位置
         ..postion = Offset(_random.nextDouble() * _initField.width, _random.nextDouble() * _initField.height)
-        //气泡运动速度
-        ..speed = _random.nextDouble() * widget.maxSpeed
-        //随机角度
-        ..theta = _random.nextDouble() * 2 * pi
         //随机半径
-        ..radius = _random.nextDouble() * widget.maxRadius;
+        ..radius = _random.nextDouble() * widget.maxRadius
+        //随机角度
+        ..theta = _random.nextDouble() * 2 * pi;
+      //指定速度
+      particle.speed = widget.maxSpeed - particle.radius / widget.maxRadius * widget.maxSpeed;
       //集合保存
       _list.add(particle);
     }
@@ -95,30 +93,26 @@ class BubblePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     //每次绘制都重新计算位置
     list.forEach((element) {
-      //计算偏移
-      var velocity = calculateXY(element.speed, element.theta);
-      //新的坐标 微偏移
-      var dx = element.postion.dx + velocity.dx;
-      var dy = element.postion.dy + velocity.dy;
+      //新的坐标
+      var nowX = element.postion.dx + element.speed * cos(element.theta);
+      var nowY = element.postion.dy + element.speed * sin(element.theta);
       //x轴边界计算
       if (element.postion.dx + element.radius < 0) {
-        dx = size.width + element.radius;
+        nowX = size.width + element.radius;
         element.theta = random.nextDouble() * 2 * pi;
-      }
-      if (element.postion.dx - element.radius > size.width) {
-        dx = -element.radius;
+      } else if (element.postion.dx - element.radius > size.width) {
+        nowX = -element.radius;
         element.theta = random.nextDouble() * 2 * pi;
       }
       if (element.postion.dy + element.radius < 0) {
-        dy = size.height + element.radius;
+        nowY = size.height + element.radius;
         element.theta = random.nextDouble() * 2 * pi;
-      }
-      if (element.postion.dy - element.radius > size.height) {
-        dy = -element.radius;
+      } else if (element.postion.dy - element.radius > size.height) {
+        nowY = -element.radius;
         element.theta = random.nextDouble() * 2 * pi;
       }
       //新的位置
-      element.postion = Offset(dx, dy);
+      element.postion = Offset(nowX, nowY);
     });
 
     //循环绘制所有的气泡
