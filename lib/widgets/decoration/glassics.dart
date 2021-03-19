@@ -30,12 +30,14 @@ class GlassicLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-      child: Container(
-        color: color.withOpacity(opacity),
-      ),
-    );
+    return opacity != 0
+        ? BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+            child: Container(
+              color: color.withOpacity(opacity),
+            ),
+          )
+        : SizedBox(height: 0);
   }
 }
 

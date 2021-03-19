@@ -39,10 +39,10 @@ class _TimeSpanSelectorState extends State<TimeSpanSelector> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        elevation: 3,
+      child: Container(
+        color: Colors.transparent,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(16),
           child: SizedBox(
             height: widget.height - 20,
             child: Row(

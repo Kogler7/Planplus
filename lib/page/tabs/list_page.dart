@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/index.dart';
-import 'package:flutter_planplus/widgets/tiles/sect_item.dart';
+import 'package:flutter_planplus/widgets/tiles/lists/sect_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'lists/group_page.dart';

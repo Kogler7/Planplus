@@ -69,9 +69,7 @@ class _HomePageState extends State<HomePage> {
           color: 0 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
-          setState(() {
-            _selectedIndex = 0;
-          });
+          if (_selectedIndex != 0) setState(() => _selectedIndex = 0);
         },
       ),
       IconButton(
@@ -80,9 +78,7 @@ class _HomePageState extends State<HomePage> {
           color: 1 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
-          setState(() {
-            _selectedIndex = 1;
-          });
+          if (_selectedIndex != 1) setState(() => _selectedIndex = 1);
         },
       ),
       SizedBox(width: 40),
@@ -92,9 +88,7 @@ class _HomePageState extends State<HomePage> {
           color: 2 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
-          setState(() {
-            _selectedIndex = 2;
-          });
+          if (_selectedIndex != 2) setState(() => _selectedIndex = 2);
         },
       ),
       IconButton(
@@ -103,9 +97,7 @@ class _HomePageState extends State<HomePage> {
           color: 3 == _selectedIndex ? Colors.white : Colors.black54,
         ),
         onPressed: () {
-          setState(() {
-            _selectedIndex = 3;
-          });
+          if (_selectedIndex != 3) setState(() => _selectedIndex = 3);
         },
       ),
     ];

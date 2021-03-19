@@ -27,6 +27,13 @@ class ThemedGlassicLayer extends StatefulWidget {
 class _ThemedGlassicLayerState extends State<ThemedGlassicLayer> {
   int _nowThemeIndex = initMainBackIndex;
   double _opacity = 0.0;
+  bool _updated = false;
+
+  @override
+  void initState() {
+    themeIndexStream.stream.listen((event) => _updated = true);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +41,18 @@ class _ThemedGlassicLayerState extends State<ThemedGlassicLayer> {
       initialData: initMainBackIndex,
       stream: themeIndexStream.stream,
       builder: (ctx, snap) {
-        if (snap.data == _nowThemeIndex) {
-          _opacity += 0.2;
-          if (_opacity >= 1.0) {
+        if (_updated) {
+          if (snap.data == _nowThemeIndex) {
+            _opacity += 0.2;
+            if (_opacity >= 1.0) {
+              _opacity = 0.0;
+            }
+          } else {
             _opacity = 0.0;
           }
-        } else {
-          _opacity = 0.0;
+          _nowThemeIndex = snap.data;
+          _updated = false;
         }
-        _nowThemeIndex = snap.data;
         return GlassicLayer(
           blur: 1 + _opacity,
           opacity: _opacity,
