@@ -16,9 +16,9 @@ class BluryListCard extends StatelessWidget {
   final Color color;
 
   BluryListCard({
-    this.blur = 3,
+    this.blur = 0,
     this.circular = 14.0,
-    this.basicPadding = 10,
+    this.basicPadding = 16,
     this.title,
     this.subTitle,
     this.titleLeading,
@@ -45,15 +45,17 @@ class BluryListCard extends StatelessWidget {
                 hasTitle
                     ? TransListTile(
                         height: titleHeight,
+                        dividerHeight: 2,
+                        headIndent: 0,
                         title: Text(title, style: new TextStyle(fontWeight: FontWeight.w500)),
-                        subtitle: subTitle != null ? Text(subTitle) : SizedBox(height: 0),
+                        subtitle: subTitle != null
+                            ? Text(
+                                subTitle,
+                                style: TextStyle(color: Colors.black38, fontSize: 10),
+                              )
+                            : SizedBox(height: 0),
                         leading: titleLeading ?? SizedBox(width: 0),
-                      )
-                    : SizedBox(height: 0),
-                hasTitle
-                    ? Divider(
-                        height: 2,
-                        thickness: 1,
+                        enabled: false,
                       )
                     : SizedBox(height: 0),
                 ...children,

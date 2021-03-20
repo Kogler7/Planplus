@@ -22,10 +22,10 @@ class LoginBoxBlank extends StatelessWidget {
   LoginBoxBlank({
     Key key,
     this.height = 50,
-    this.hintText,
+    this.hintText = '',
     this.prefixIconData,
     this.suffixIconData,
-    this.obscureText,
+    this.obscureText = false,
     this.onChanged,
   }) : super(key: key);
 
@@ -36,7 +36,7 @@ class LoginBoxBlank extends StatelessWidget {
       height: height,
       child: TextField(
         //实时输入回调
-        onChanged: onChanged,
+        onChanged: onChanged ?? () {},
         //是否隐藏文本
         obscureText: obscureText,
         //隐藏文本小圆点的颜色

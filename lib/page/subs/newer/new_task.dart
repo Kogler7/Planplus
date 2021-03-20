@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_planplus/widgets/decoration/theme.dart';
 import 'package:flutter_planplus/widgets/para_selector/index.dart';
 import 'package:flutter_planplus/widgets/tiles/basic/blury_card.dart';
-import 'package:flutter_planplus/widgets/tiles/basic/list_card.dart';
 import 'package:flutter_planplus/widgets/tiles/basic/trans_tile.dart';
 
 class NewTaskPage extends StatefulWidget {
@@ -59,6 +58,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                         Icons.contact_mail,
                         color: Colors.blue[500],
                       ),
+                      hasDivider: false,
                     ),
                   ],
                 ),
