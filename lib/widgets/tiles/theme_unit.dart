@@ -17,7 +17,10 @@ class ThemeDisplayUnit extends StatelessWidget {
       color: Colors.transparent,
       child: Ink(
         child: InkWell(
-          onTap: () => themeIndexStream.sink.add(index),
+          onTap: () {
+            themeIndexStream.sink.add(index);
+            initMainBackIndex = index;
+          },
           child: Stack(
             children: [
               Container(

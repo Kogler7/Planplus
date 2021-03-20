@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/widgets/decoration/glassics.dart';
+import 'package:flutter_planplus/widgets/charts/bar_chart.dart';
+import 'package:flutter_planplus/widgets/charts/line_chart.dart';
+import 'package:flutter_planplus/widgets/charts/pie_chart.dart';
 
 class JudgePage extends StatefulWidget {
   JudgePage({Key key}) : super(key: key);
@@ -12,23 +14,14 @@ class JudgePage extends StatefulWidget {
 class _JudgePageState extends State<JudgePage> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView(
       physics: BouncingScrollPhysics(),
-      itemCount: 4,
-      itemBuilder: (ctx, index) {
-        return Padding(
-          padding: EdgeInsets.only(top: 30),
-          child: GlassicContainer(
-            width: 200,
-            height: 200,
-            borderRadius: 15,
-            linearGradient: LinearGradient(colors: [Colors.white54, Colors.black54]),
-            border: 5,
-            blur: 3,
-            borderGradient: LinearGradient(colors: [Colors.black54, Colors.white54]),
-          ),
-        );
-      },
+      padding: EdgeInsets.symmetric(vertical: 16),
+      children: [
+        FLLineChart(),
+        FLPieChart(),
+        FLBarChart(),
+      ],
     );
   }
 }
