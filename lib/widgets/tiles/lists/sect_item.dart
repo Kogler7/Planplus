@@ -140,7 +140,7 @@ class _SectableItemState extends State<SectableItem> with SingleTickerProviderSt
                   Expanded(
                     child: Text(
                       widget.title,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,color: Colors.black54),
                     ),
                   ),
                   widget.markIndex != 0

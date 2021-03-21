@@ -45,38 +45,38 @@ class _NewQueryPageState extends State<NewQueryPage> {
                   ],
                 ),
                 BluryListCard(
-                  title: '你啥时候睡觉？',
-                  subTitle: '单选题',
+                  title: '记录下你的学习状态',
+                  subTitle: '单选题，数据链接至：七日学习状态分布图',
                   titleLeading: Icon(
                     Icons.access_time,
                     color: Colors.blue[500],
                   ),
                   children: [
                     SingleQueryOption(
-                      text: '选项',
+                      text: '专注高效',
                       chosen: false,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '正常状态',
                       chosen: true,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '有些分心',
                       chosen: false,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '有些散漫',
                       chosen: false,
                       hasDivider: false,
                     ),
                   ],
                 ),
                 BluryListCard(
-                  title: '作业还剩多少？',
-                  subTitle: '打分题',
+                  title: '学习状态打分',
+                  subTitle: '打分题，数据链接至：七日学习状态趋势图',
                   titleLeading: Icon(
                     Icons.clear_all,
                     color: Colors.blue[500],
@@ -86,54 +86,48 @@ class _NewQueryPageState extends State<NewQueryPage> {
                   ],
                 ),
                 BluryListCard(
-                  title: '你喜欢吃什么？',
-                  subTitle: '多选题',
+                  title: '多选题展示',
+                  subTitle: '多选题，支持自定义',
                   titleLeading: Icon(
                     Icons.restaurant_menu,
                     color: Colors.blue[500],
                   ),
                   children: [
                     SingleQueryOption(
-                      text: '选项',
+                      text: '选项 1',
                       multiStyle: true,
                       chosen: true,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '选项 2',
                       multiStyle: true,
                       chosen: false,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '选项 3',
                       multiStyle: true,
                       chosen: false,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '选项 4',
                       multiStyle: true,
                       chosen: true,
                       hasDivider: true,
                     ),
                     SingleQueryOption(
-                      text: '选项',
+                      text: '选项 5',
                       multiStyle: true,
                       chosen: false,
-                      hasDivider: true,
-                    ),
-                    SingleQueryOption(
-                      text: '选项',
-                      multiStyle: true,
-                      chosen: true,
                       hasDivider: false,
                     ),
                   ],
                 ),
                 BluryListCard(
-                  title: '想对我说的悄悄话',
-                  subTitle: '填空题',
+                  title: '对明天的自己想说的话',
+                  subTitle: '填空题，将添加至：明日提醒',
                   titleLeading: Icon(
                     Icons.comment,
                     color: Colors.blue[500],
@@ -143,7 +137,35 @@ class _NewQueryPageState extends State<NewQueryPage> {
                       maxLines: 3,
                       maxLength: 120,
                       height: 120,
-                      helperText: '我不会告诉其他人哦~',
+                      helperText: '给明天的自己一点激励~',
+                    ),
+                  ],
+                ),
+                BluryListCard(
+                  title: '每日三问',
+                  subTitle: '每日固定问卷，必填',
+                  titleLeading: Icon(
+                    Icons.comment,
+                    color: Colors.blue[500],
+                  ),
+                  children: [
+                    TextQueryBlank(
+                      maxLines: 1,
+                      maxLength: 25,
+                      height: 80,
+                      helperText: '我今天有朝着自己的目标努力吗？',
+                    ),
+                    TextQueryBlank(
+                      maxLines: 1,
+                      maxLength: 25,
+                      height: 80,
+                      helperText: '我的学问有没有进步？',
+                    ),
+                    TextQueryBlank(
+                      maxLines: 1,
+                      maxLength: 25,
+                      height: 80,
+                      helperText: '我有没有坚持良好的习惯？',
                     ),
                   ],
                 ),

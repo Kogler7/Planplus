@@ -36,7 +36,7 @@ class LoginBoxBlank extends StatelessWidget {
       height: height,
       child: TextField(
         //实时输入回调
-        onChanged: onChanged ?? () {},
+        onChanged: onChanged ?? (String str) {},
         //是否隐藏文本
         obscureText: obscureText,
         //隐藏文本小圆点的颜色

@@ -119,7 +119,7 @@ class _SectionBarState extends State<SectionBar> with SingleTickerProviderStateM
                   child: IgnorePointer(
                     child: Text(
                       widget.title,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,color: Colors.black54),///记住改成属性
                     ),
                   ),
                 ),

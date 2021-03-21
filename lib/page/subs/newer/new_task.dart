@@ -97,6 +97,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 Icons.close,
                 color: Colors.grey,
               ),
+              hasDivider: false,
             ),
           ],
         ),
@@ -182,6 +183,17 @@ class _NewTaskPageState extends State<NewTaskPage> {
             color: Colors.blue[500],
           ),
           children: [
+            TransListTile(
+              title: Text('每日三问', style: TextStyle(color: Colors.black54)),
+              subtitle: Text(
+                '触发条件：睡前；重复：每天',
+                style: TextStyle(color: Colors.black38, fontSize: 8),
+              ),
+              leading: Icon(
+                Icons.help_outline,
+                color: Colors.blue[500],
+              ),
+            ),
             TransListTile(
               title: Text('进入学习状态调查', style: TextStyle(color: Colors.black54)),
               subtitle: Text(

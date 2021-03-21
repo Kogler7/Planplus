@@ -180,7 +180,7 @@ class _TimeSpanSelectorState extends State<TimeSpanSelector> {
                 Expanded(
                   child: Center(
                     child: Container(
-                      color: Colors.red,
+                      color: Colors.white,
                       width: 20,
                       height: 200,
                     ),

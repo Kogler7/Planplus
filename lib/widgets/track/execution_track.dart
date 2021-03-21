@@ -22,19 +22,22 @@ class _ExecutionTrackState extends State<ExecutionTrack> {
   Widget build(BuildContext context) {
     return IgnorePointer(
       child: Container(
-        color: Colors.white54,
+        color: Colors.white12,
         width: widget.frameSzie.width,
         height: widget.frameSzie.height,
         child: ListView.builder(
           controller: _scrollController,
-          itemCount: 30,
+          itemCount: 100,
           itemBuilder: (ctx, index) {
             return Padding(
               padding: EdgeInsets.only(top: 20),
               child: Container(
-                width: 100,
-                height: 50,
-                color: Colors.blue,
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             );
           },

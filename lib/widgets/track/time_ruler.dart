@@ -140,7 +140,10 @@ class _TimeRulerState extends State<TimeRuler> {
                 padding: EdgeInsets.only(left: 20, bottom: _tipPadding),
                 child: SizedBox(
                   height: _tipHeight,
-                  child: Text(getTimeByIndex(index)),
+                  child: Text(
+                    getTimeByIndex(index),
+                    style: TextStyle(color: Colors.black54),
+                  ),
                 ),
               );
             },

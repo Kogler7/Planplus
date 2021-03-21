@@ -52,35 +52,35 @@ class PieChart2State extends State {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                // Indicator(
-                //   color: Color(0xff0293ee),
-                //   text: 'First',
-                //   isSquare: true,
-                // ),
+                Indicator(
+                  color: Color(0xff0293ee),
+                  text: '工作',
+                  isSquare: true,
+                ),
                 SizedBox(
                   height: 4,
                 ),
-                // Indicator(
-                //   color: Color(0xfff8b250),
-                //   text: 'Second',
-                //   isSquare: true,
-                // ),
+                Indicator(
+                  color: Color(0xfff8b250),
+                  text: '休息',
+                  isSquare: true,
+                ),
                 SizedBox(
                   height: 4,
                 ),
-                // Indicator(
-                //   color: Color(0xff845bef),
-                //   text: 'Third',
-                //   isSquare: true,
-                // ),
+                Indicator(
+                  color: Color(0xff845bef),
+                  text: '浪费',
+                  isSquare: true,
+                ),
                 SizedBox(
                   height: 4,
                 ),
-                // Indicator(
-                //   color: Color(0xff13d38e),
-                //   text: 'Fourth',
-                //   isSquare: true,
-                // ),
+                Indicator(
+                  color: Color(0xff13d38e),
+                  text: '固定',
+                  isSquare: true,
+                ),
                 SizedBox(
                   height: 18,
                 ),
@@ -137,5 +137,47 @@ class PieChart2State extends State {
           return null;
       }
     });
+  }
+}
+
+class Indicator extends StatelessWidget {
+  final Color color;
+  final String text;
+  final bool isSquare;
+  final double height;
+  final double width;
+
+  const Indicator({
+    Key key,
+    this.color,
+    this.text,
+    this.isSquare,
+    this.height = 30,
+    this.width = 86,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: width,
+      child: Row(
+        children: [
+          Container(
+            height: height - 10,
+            width: height - 10,
+            color: color,
+            padding: EdgeInsets.all(5),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.black54),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
