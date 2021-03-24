@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/page/subs/newer/new_query.dart';
 import 'package:flutter_planplus/page/subs/newer/new_task.dart';
+import 'package:flutter_planplus/widgets/basic/stack_scaffold.dart';
 import 'package:flutter_planplus/widgets/decoration/theme.dart';
-import '../global.dart';
 import 'package:flutter_planplus/config/index.dart';
 import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
+import 'package:flutter_planplus/widgets/dialogs/base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
@@ -108,57 +109,48 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
+      child: StackedScaffold(
+        backLayer: [
           ThemedBackImage(),
           ThemedGlassicLayer(),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: widget.titles[_selectedIndex],
-              centerTitle: _selectedIndex == 1 ? true : false,
-              actions: <Widget>[IconButton(icon: Icon(Icons.search, color: Colors.black54), onPressed: () {})],
-            ),
-            body: widget.pageViews[_selectedIndex],
-            bottomNavigationBar: BottomAppBar(
-              color: Colors.transparent,
-              elevation: 0,
-              shape: CircularNotchedRectangle(),
-              child: Padding(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: getButtons(_selectedIndex),
-                ),
-                padding: EdgeInsets.only(bottom: 8),
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(
-                Icons.add,
-                color: Colors.white60,
-              ),
-              onPressed: () {
-                setState(() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        if (_selectedIndex == 0) return NewTaskPage();
-                        if (_selectedIndex == 1) return NewQueryPage();
-                        else return Expect();
-                      },
-                    ),
-                  );
-                });
-              },
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          ),
         ],
+        foreLayer: [
+          DialogBase(),
+        ],
+        appBarTitle: widget.titles[_selectedIndex],
+        appBarCenterTitle: _selectedIndex == 1 ? true : false,
+        appBarActions: [IconButton(icon: Icon(Icons.search, color: Colors.black54), onPressed: () {})],
+        body: widget.pageViews[_selectedIndex],
+        bottomAppBarShape: CircularNotchedRectangle(),
+        bottomAppBarChild: Padding(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: getButtons(_selectedIndex),
+          ),
+          padding: EdgeInsets.only(bottom: 8),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            color: Colors.white60,
+          ),
+          onPressed: () {
+            setState(() {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    if (_selectedIndex == 0) return NewTaskPage();
+                    if (_selectedIndex == 1) return NewQueryPage();
+                    else return Expect();
+                  },
+                ),
+              );
+            });
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }

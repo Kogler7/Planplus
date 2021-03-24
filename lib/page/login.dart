@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/router/index.dart';
-import 'package:flutter_planplus/widgets/blanks/login_box.dart';
+import 'package:flutter_planplus/widgets/blanks/border_box.dart';
 import 'package:flutter_planplus/widgets/buttons/coin_box.dart';
 import 'package:flutter_planplus/widgets/decoration/bubble.dart';
 import 'package:flutter_planplus/widgets/decoration/theme.dart';
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: <Widget>[
           _actionState != ActionState.navigate
-              ? LoginBoxBlank(
+              ? BorderBoxBlank(
                   hintText: '邮箱',
                   obscureText: false,
                   prefixIconData: Icons.mail_outline,
@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
           _actionState != ActionState.navigate
               ? Padding(
                   padding: EdgeInsets.only(top: 10),
-                  child: LoginBoxBlank(
+                  child: BorderBoxBlank(
                     hintText: '密码',
                     obscureText: true,
                     prefixIconData: Icons.lock_outline,
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
           _actionState == ActionState.register
               ? Padding(
                   padding: EdgeInsets.only(top: 10),
-                  child: LoginBoxBlank(
+                  child: BorderBoxBlank(
                     hintText: '确认密码',
                     obscureText: true,
                     prefixIconData: Icons.lock_outline,

@@ -7,7 +7,7 @@
 ### `详细信息：`
 |开发语言|开发框架|适用平台|最新版本|版本状态|
 |:---:|:---:|:---:|:---:|:---:|
-|Dart|Flutter|Android/ios|0.1.0 beta 1|Snapshot (21s06w)|
+|Dart|Flutter|Android/ios|0.1.0 beta 1|Snapshot (21s07w)|
 ## 案例引入
 ---
 ## 设计说明
