@@ -10,7 +10,7 @@ enum TaskState {
 }
 
 class TaskTile extends StatefulWidget {
-  TaskState state;
+  final TaskState state;
   final String title;
   final String subtitle;
   final List<String> subTasks;

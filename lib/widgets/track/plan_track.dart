@@ -65,7 +65,7 @@ class _PlanedTaskTrackState extends State<PlanedTaskTrack> {
   Widget taskLayoutTrackBuilder() {
     return ListView.builder(
       controller: _scrollController,
-      itemCount: tempTasks.length + 1,
+      itemCount: tempTasks.length,
       itemBuilder: (ctx, index) {
         if (index < tempTasks.length)
           return Padding(

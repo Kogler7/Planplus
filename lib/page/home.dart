@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           ThemedGlassicLayer(),
         ],
         foreLayer: [
-          DialogBase(),
+          CustomDialogBase(),
         ],
         appBarTitle: widget.titles[_selectedIndex],
         appBarCenterTitle: _selectedIndex == 1 ? true : false,

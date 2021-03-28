@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/widgets/tiles/theme_unit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_planplus/config/string.dart';
-import '../global.dart';
 
 Future<void> showThemeDialog(BuildContext ctx) async {
   int index = await showDialog<int>(
