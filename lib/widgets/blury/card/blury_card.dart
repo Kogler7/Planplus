@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/widgets/buttons/trans/list_tile.dart';
+import 'package:flutter_planplus/widgets/blury/basic/head/center_head.dart';
+import 'package:flutter_planplus/widgets/blury/basic/head/tile_head.dart';
 import 'package:flutter_planplus/widgets/buttons/trans/list_tile.dart';
 
 class BluryListCard extends StatelessWidget {
@@ -15,6 +16,7 @@ class BluryListCard extends StatelessWidget {
   final double opacity;
   final double titleHeight;
   final Color color;
+  final bool centralHeaded;
 
   BluryListCard({
     this.blur = 0,
@@ -27,6 +29,7 @@ class BluryListCard extends StatelessWidget {
     this.opacity = 0.7,
     this.titleHeight = 56,
     this.color = Colors.white,
+    this.centralHeaded = false,
   });
 
   @override
@@ -44,21 +47,19 @@ class BluryListCard extends StatelessWidget {
             child: Column(
               children: [
                 hasTitle
-                    ? TransListTile(
-                        height: titleHeight,
-                        dividerHeight: 2,
-                        headIndent: 0,
-                        title: Text(title, style: new TextStyle(fontWeight: FontWeight.w500)),
-                        subtitle: subTitle != null
-                            ? Text(
-                                subTitle,
-                                style: TextStyle(color: Colors.black38, fontSize: 10),
-                              )
-                            : SizedBox(height: 0),
-                        leading: titleLeading ?? SizedBox(width: 0),
-                        enabled: false,
-                      )
-                    : SizedBox(height: 0),
+                    ? centralHeaded
+                        ? CentralCardHeading(
+                            height: titleHeight,
+                            title: title,
+                            subTitle: subTitle,
+                          )
+                        : TitleCardHeading(
+                            height: titleHeight,
+                            title: title,
+                            subTitle: subTitle,
+                            leading: titleLeading ?? SizedBox.shrink(),
+                          )
+                    : SizedBox.shrink(),
                 ...children,
               ],
             ),

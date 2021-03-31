@@ -8,7 +8,7 @@ abstract class CustomDialog {
   double attachPadding = 20;
   bool locked = false;
   Duration duration = Duration(milliseconds: 500);
-  MainAxisAlignment align = MainAxisAlignment.start;
+  MainAxisAlignment align = MainAxisAlignment.center;
   DialogAppear appear = DialogAppear.faded;
   Size size = Size(300, 150);
 

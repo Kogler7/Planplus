@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/widgets/blury/basic/divider.dart';
 
 class TransListTile extends StatelessWidget {
   final Widget leading;
@@ -73,15 +74,12 @@ class TransListTile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  hasDivider
-                      ? Divider(
-                          height: dividerHeight,
-                          thickness: thickness,
-                          indent: headIndent,
-                          endIndent: endIndent,
-                          color: Colors.grey.withOpacity(dividerOpacity),
-                        )
-                      : SizedBox(height: 0),
+                  TransDivider(
+                    thickness: thickness,
+                    headIndent: headIndent,
+                    endIndent: endIndent,
+                    enabled: hasDivider,
+                  ),
                 ],
               ),
             ),
