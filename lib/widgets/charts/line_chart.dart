@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_planplus/widgets/tiles/basic/blury_card.dart';
+import 'package:flutter_planplus/widgets/blury/card/blury_card.dart';
 
 class FLLineChart extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/widgets/blury/trans_btn/trans_tile.dart';
+import 'package:flutter_planplus/widgets/buttons/trans/list_tile.dart';
 
 class ListCard extends StatelessWidget {
   final double elevation;

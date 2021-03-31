@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_planplus/widgets/blury/card/blury_card.dart';
 import 'package:flutter_planplus/widgets/decoration/theme.dart';
 import 'package:flutter_planplus/widgets/querys/range_choice.dart';
 import 'package:flutter_planplus/widgets/querys/single_option.dart';
 import 'package:flutter_planplus/widgets/querys/text_blank.dart';
-import 'package:flutter_planplus/widgets/tiles/basic/blury_card.dart';
 
 class NewQueryPage extends StatefulWidget {
   @override

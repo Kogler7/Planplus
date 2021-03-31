@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_planplus/widgets/tiles/basic/trans_tile.dart';
+import 'package:flutter_planplus/widgets/buttons/trans/list_tile.dart';
 
 class RangedQueryChoice extends StatelessWidget {
   final double height;
