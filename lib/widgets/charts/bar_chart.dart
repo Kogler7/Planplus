@@ -21,8 +21,30 @@ class _FLBarChartState extends State<FLBarChart> {
           width: 310,
           height: 220,
           padding: EdgeInsets.all(10),
+          child: getBarChart(),
         ),
       ],
     );
   }
+}
+
+BarChart getBarChart(){
+  return BarChart(BarChartData(
+    gridData: FlGridData(
+      show: true,
+      drawVerticalLine: true,
+      getDrawingHorizontalLine: (value) {
+        return FlLine(
+          color: Colors.black12,
+          strokeWidth: 1,
+        );
+      },
+      getDrawingVerticalLine: (value) {
+        return FlLine(
+          color: Colors.black12,
+          strokeWidth: 1,
+        );
+      },
+    ),
+  ));
 }

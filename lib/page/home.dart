@@ -1,4 +1,6 @@
 //Planplus主页
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_planplus/page/subs/newer/new_query.dart';
@@ -10,7 +12,10 @@ import 'package:flutter_planplus/index.dart';
 import 'package:flutter_planplus/page/tabs/lists/model_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/query_list.dart';
 import 'package:flutter_planplus/page/tabs/lists/task_list.dart';
+import 'package:flutter_planplus/widgets/dialogs/alert.dart';
 import 'package:flutter_planplus/widgets/dialogs/base.dart';
+import 'package:flutter_planplus/widgets/dialogs/blank.dart';
+import 'package:flutter_planplus/widgets/dialogs/dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tabs/track_page.dart';
 import 'tabs/judge_page.dart';
@@ -61,6 +66,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  var _dialogController = StreamController<CustomDialog>();
+
+  @override
+  void dispose() {
+    _dialogController.close();
+    super.dispose();
+  }
 
   //根据选择改变剩余按钮
   List<Widget> getButtons(int index) {
@@ -115,7 +127,9 @@ class _HomePageState extends State<HomePage> {
           ThemedGlassicLayer(),
         ],
         foreLayer: [
-          CustomDialogBase(),
+          CustomDialogBase(
+            dialogStream: _dialogController.stream,
+          ),
         ],
         appBarTitle: widget.titles[_selectedIndex],
         appBarCenterTitle: _selectedIndex == 1 ? true : false,
@@ -136,18 +150,26 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white60,
           ),
           onPressed: () {
-            setState(() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    if (_selectedIndex == 0) return NewTaskPage();
-                    if (_selectedIndex == 1) return NewQueryPage();
-                    else return Expect();
-                  },
-                ),
-              );
-            });
+            if (_selectedIndex == 2)
+              _dialogController.sink.add(CustomAlertDialog());
+            else if (_selectedIndex == 3)
+              _dialogController.sink.add(CustomBlankDialog());
+            else {
+              setState(() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      if (_selectedIndex == 0) return NewTaskPage();
+                      if (_selectedIndex == 1)
+                        return NewQueryPage();
+                      else
+                        return Expect();
+                    },
+                  ),
+                );
+              });
+            }
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

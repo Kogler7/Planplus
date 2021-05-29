@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 ///dialog抽象父类
 
 abstract class CustomDialog {
-  double backOpacity = 0.3;
+  double backOpacity = 0.0;
   Color backColor = Colors.black;
-  double attachPadding = 20;
+  double attachPadding = -20;
   bool locked = false;
   Duration duration = Duration(milliseconds: 500);
   MainAxisAlignment align = MainAxisAlignment.center;

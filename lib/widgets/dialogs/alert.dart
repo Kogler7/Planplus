@@ -7,23 +7,46 @@ import 'package:flutter_planplus/widgets/dialogs/dialog.dart';
 ///上方警示
 
 class CustomAlertDialog extends CustomDialog {
+  CustomAlertDialog() {
+    backOpacity = 0.3;
+    attachPadding = 20;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 350,
-      child: BluryListCard(
-        blur: 4,
-        titleHeight: 70,
-        centralHeaded: true,
-        title: "确定删除？",
-        subTitle: '被删除的物品将会被移至回收站',
-        children: [
-          SingleTextButton(),
-          SingleTextButton(
-            bold: true,
-          ),
-          DoubleTextButton(),
-        ],
+    return Material(
+      color: Colors.transparent,
+      child: SizedBox(
+        width: 310,
+        child: BluryListCard(
+          blur: 4,
+          titleHeight: 70,
+          centralHeaded: true,
+          title: "新建任务",
+          subTitle: '从标记的模板中快速新建任务',
+          children: [
+            SingleTextButton(
+              text: '艾宾浩斯子任务模板',
+            ),
+            SingleTextButton(
+              text: '番茄任务模板（25min）',
+            ),
+            SingleTextButton(
+              text: '碎片时间利用模板（读书）',
+            ),
+            SingleTextButton(
+              text: '临时会议模板',
+            ),
+            SingleTextButton(
+              text: '打开参数选择器',
+              bold: true,
+            ),
+            DoubleTextButton(
+              textLeft: '取消',
+              textRight: '确定',
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -16,6 +16,14 @@ class KGroupBase {
       MemberBase(title: '11：00睡觉', subTitle: '已坚持：24天'),
       MemberBase(title: '看书一小时', subTitle: '已坚持：14天'),
     ]),
+    GroupBase(title: '子程序模仿示例', section: '', members: [
+      MemberBase(title: '端午节', subTitle: '倒计时：16天；抽象任务；自动完成'),
+      MemberBase(title: '每日单词打卡', subTitle: '每日重复；不晚于8:00；关联至：每月单词统计'),
+      MemberBase(title: '今日番茄', subTitle: '应用模板：番茄任务；限时25min；触发锁机'),
+      MemberBase(title: '今日减肥', subTitle: '每日重复；关联至：每年减肥计划'),
+      MemberBase(title: '今日阅读', subTitle: '每日重复；关联至：每月读书计划'),
+      MemberBase(title: '每日回顾', subTitle: '每日重复；关联问卷：每日三问'),
+    ]),
     GroupBase(title: '成就清单', section: '新手礼物', members: [
       MemberBase(title: '坚持看书', subTitle: '期望值：1，次数不限'),
       MemberBase(title: '坚决完成任务', subTitle: '期望值：2，次数不限'),

@@ -119,7 +119,7 @@ class _TrackViewState extends State<TrackView> {
             scrollStream: _scrollStream,
             frameSzie: _frameSize,
           ),
-          left: 330,
+          left: 340,
         ),
       ],
     );

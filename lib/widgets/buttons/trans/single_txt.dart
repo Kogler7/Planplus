@@ -13,7 +13,7 @@ class SingleTextButton extends StatelessWidget {
 
   const SingleTextButton({
     Key key,
-    this.height = 50,
+    this.height = 44,
     this.text = 'text',
     this.color = KColor.primaryColor,
     this.hasDivider = true,
@@ -24,25 +24,29 @@ class SingleTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      child: Column(
-        children: [
-          TextButton(
-            onPressed: onPressed ?? () {},
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: fontSize,
-                color: color,
-                fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+    return GestureDetector(///水波纹效果
+      child: Container(
+        height: height,
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    color: color,
+                    fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
               ),
             ),
-          ),
-          TransDivider(
-            enabled: hasDivider,
-          ),
-        ],
+            TransDivider(
+              enabled: hasDivider,
+            ),
+          ],
+        ),
       ),
     );
   }

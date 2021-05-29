@@ -17,7 +17,7 @@ class DoubleTextButton extends StatelessWidget {
 
   const DoubleTextButton({
     Key key,
-    this.height = 50,
+    this.height = 44,
     this.fontSize = 18,
     this.textLeft = 'Left',
     this.textRight = 'Right',
@@ -39,14 +39,15 @@ class DoubleTextButton extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: TextButton(
-                  onPressed: leftPressed ?? () {},
-                  child: Text(
-                    textLeft,
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      color: colorLeft,
-                      fontWeight: boldLeft ? FontWeight.bold : FontWeight.normal,
+                child: Center(
+                  child: GestureDetector(
+                    child: Text(
+                      textLeft,
+                      style: TextStyle(
+                        fontSize: fontSize,
+                        color: colorLeft,
+                        fontWeight: boldLeft ? FontWeight.bold : FontWeight.normal,
+                      ),
                     ),
                   ),
                 ),
@@ -57,14 +58,15 @@ class DoubleTextButton extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.2),
               ),
               Expanded(
-                child: TextButton(
-                  onPressed: rightPressed ?? () {},
-                  child: Text(
-                    textRight,
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      color: colorRight,
-                      fontWeight: boldRight ? FontWeight.bold : FontWeight.normal,
+                child: Center(
+                  child: GestureDetector(
+                    child: Text(
+                      textRight,
+                      style: TextStyle(
+                        fontSize: fontSize,
+                        color: colorRight,
+                        fontWeight: boldRight ? FontWeight.bold : FontWeight.normal,
+                      ),
                     ),
                   ),
                 ),
